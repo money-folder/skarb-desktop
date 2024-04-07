@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { useWhistory } from '../../queries/whistory-queries';
 
 interface WalletHistoryProps {
@@ -23,28 +24,32 @@ const WalletHistory = ({ walletId }: WalletHistoryProps) => {
       <div className="flex h-full">
         <div className="w-1/2 h-full flex-grow overflow-auto">
           <table className="w-full">
-            <tr>
-              <th className="p-1 text-sm border-2 border-black">ID</th>
-              <th className="p-1 text-sm border-2 border-black">Amount</th>
-              <th className="p-1 text-sm border-2 border-black">Date</th>
-              {/* <th className="p-1 text-sm border-2 border-black">Controls</th> */}
-            </tr>
-            {whistoryList.map((whistory) => (
-              <tr key={whistory.id}>
-                <td className="p-1 text-sm text-center border-2 border-black">
-                  {whistory.id}
-                </td>
-                <td className="p-1 text-sm text-center border-2 border-black">
-                  {whistory.amount}
-                </td>
-                <td className="p-1 text-sm text-center border-2 border-black">
-                  {whistory.date}
-                </td>
-                {/* <td className="p-1 text-sm text-center border-2 border-black">
+            <thead>
+              <tr>
+                <th className="p-1 text-sm border-2 border-black">ID</th>
+                <th className="p-1 text-sm border-2 border-black">Amount</th>
+                <th className="p-1 text-sm border-2 border-black">Date</th>
+                {/* <th className="p-1 text-sm border-2 border-black">Controls</th> */}
+              </tr>
+            </thead>
+            <tbody>
+              {whistoryList.map((whistory) => (
+                <tr key={whistory.id}>
+                  <td className="p-1 text-sm text-center border-2 border-black">
+                    {whistory.id}
+                  </td>
+                  <td className="p-1 text-sm text-center border-2 border-black">
+                    {whistory.amount}
+                  </td>
+                  <td className="p-1 text-sm text-center border-2 border-black">
+                    {whistory.date}
+                  </td>
+                  {/* <td className="p-1 text-sm text-center border-2 border-black">
                   <button>Delete</button>
                 </td> */}
-              </tr>
-            ))}
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
 

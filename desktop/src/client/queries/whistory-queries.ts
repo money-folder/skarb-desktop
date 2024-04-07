@@ -5,7 +5,7 @@ import { DesktopWhistoryResponse } from '../types/whistory';
 export const useWhistory = (
   walletId: string,
 ): UseQueryResult<DesktopWhistoryResponse[]> => {
-  return useQuery<DesktopWhistoryResponse[]>('whistory', () =>
+  return useQuery<DesktopWhistoryResponse[]>(`whistory-${walletId}`, () =>
     window.electron.ipcRenderer.whistory.list(walletId),
   );
 };

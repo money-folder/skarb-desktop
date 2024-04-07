@@ -8,8 +8,8 @@ const { setupWhistoryHandlers } = require('./whistory');
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 1600,
-    height: 600,
+    width: 1080,
+    height: 720,
     webPreferences: {
       // TODO: investigate if it's correct to set this to false
       sandbox: false,
