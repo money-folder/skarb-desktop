@@ -4,12 +4,13 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
-} from 'react-query';
+} from '@tanstack/react-query';
 
 export const useDbSources = (): UseQueryResult<string[]> => {
-  return useQuery<string[]>('dbSources', () =>
-    window.electron.ipcRenderer.connection.getDbSources(),
-  );
+  return useQuery<string[]>({
+    queryKey: ['dbSources'],
+    queryFn: () => window.electron.ipcRenderer.connection.getDbSources(),
+  });
 };
 
 export const useLinkDbSource = (): UseMutationResult<
@@ -19,15 +20,13 @@ export const useLinkDbSource = (): UseMutationResult<
   unknown
 > => {
   const queryClient = useQueryClient();
-  return useMutation(
-    (filePath: string) =>
+  return useMutation({
+    mutationFn: (filePath: string) =>
       window.electron.ipcRenderer.connection.addDbSource(filePath),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('dbSources');
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['dbSources'] });
     },
-  );
+  });
 };
 
 export const useRemoveDbSource = (): UseMutationResult<
@@ -37,15 +36,13 @@ export const useRemoveDbSource = (): UseMutationResult<
   unknown
 > => {
   const queryClient = useQueryClient();
-  return useMutation(
-    (filePath: string) =>
+  return useMutation({
+    mutationFn: (filePath: string) =>
       window.electron.ipcRenderer.connection.deleteDbSource(filePath),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('dbSources');
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['dbSources'] });
     },
-  );
+  });
 };
 
 export const useConnectToDb = (): UseMutationResult<
@@ -55,20 +52,20 @@ export const useConnectToDb = (): UseMutationResult<
   unknown
 > => {
   const queryClient = useQueryClient();
-  return useMutation(
-    (filePath: string) =>
+  return useMutation({
+    mutationFn: (filePath: string) =>
       window.electron.ipcRenderer.connection.connectToDb(filePath),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('dbSources');
-        queryClient.invalidateQueries('currentConnection');
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['dbSources'] });
+      queryClient.invalidateQueries({ queryKey: ['currentConnection'] });
     },
-  );
+  });
 };
 
 export const useCurrentConnection = (): UseQueryResult<string | null> => {
-  return useQuery<string | null>('currentConnection', () =>
-    window.electron.ipcRenderer.connection.getCurrentConnection(),
-  );
+  return useQuery<string | null>({
+    queryKey: ['currentConnection'],
+    queryFn: () =>
+      window.electron.ipcRenderer.connection.getCurrentConnection(),
+  });
 };
