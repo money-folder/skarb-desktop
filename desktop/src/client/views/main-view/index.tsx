@@ -1,5 +1,9 @@
 import React from 'react';
 
+// stores
+import { useActiveWalletStore } from '../../stores/active-wallet-store';
+
+// queries
 import { useWallets } from '../../queries/wallets-queries';
 
 const MainView = () => {
@@ -8,6 +12,10 @@ const MainView = () => {
     isError: isWalletsError,
     isLoading: isWalletsLoading,
   } = useWallets();
+
+  const setActiveWalletId = useActiveWalletStore(
+    (store) => store.setActiveWalletId,
+  );
 
   if (isWalletsLoading) {
     return <div>Loading...</div>;
@@ -30,6 +38,7 @@ const MainView = () => {
               <th className="text-left">Latest Balance</th>
               <th className="text-left">Currency</th>
               <th className="text-left">Latest Report</th>
+              <th className="text-left">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -39,6 +48,14 @@ const MainView = () => {
                 <td className="text-left">{wallet.latestBalance || '-'}</td>
                 <td className="text-left">{wallet.currency}</td>
                 <td className="text-left">{wallet.latestBalanceTs || '-'}</td>
+                <td className="text-left">
+                  <button
+                    className="cursor-pointer hover:underline"
+                    onClick={() => setActiveWalletId(`${wallet.id}`)}
+                  >
+                    Open
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

@@ -1,13 +1,14 @@
 import React from 'react';
 
 // views
-import ConnectionPanel from './ConnectionPanel';
-import WalletsView from './views/wallets-view';
 import MainView from './views/main-view';
+import Breadcrumbs from './views/breadcrumbs';
 
 const App = () => {
   return (
-    <div className="w-full h-screen overflow-hidden flex">
+    <div className="w-full h-screen overflow-hidden flex flex-col">
+      <Breadcrumbs />
+
       {/* <WalletsView /> */}
       {/* <ConnectionPanel /> */}
 
