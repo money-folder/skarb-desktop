@@ -1,6 +1,8 @@
 import React from 'react';
-import { useWallet } from '../../client/queries/wallets-queries';
-import { useWhistory } from '../../client/queries/whistory-queries';
+
+// queries
+import { useWallet } from '../../queries/wallets-queries';
+import { useWhistory } from '../../queries/whistory-queries';
 
 interface WalletViewProps {
   activeWalletId: string;

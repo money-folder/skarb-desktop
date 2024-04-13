@@ -4,8 +4,8 @@ import React from 'react';
 import { useActiveWalletStore } from './stores/active-wallet-store';
 
 // views
-import WalletsScreen from '../screens/wallets-screen';
-import WalletScreen from '../screens/wallet-screen';
+import WalletsScreen from './screens/wallets-screen';
+import WalletScreen from './screens/wallet-screen';
 
 // widgets
 import Breadcrumbs from './widgets/breadcrumbs';

@@ -1,10 +1,10 @@
 import React from 'react';
 
 // stores
-import { useActiveWalletStore } from '../../client/stores/active-wallet-store';
+import { useActiveWalletStore } from '../../stores/active-wallet-store';
 
 // queries
-import { useWallets } from '../../client/queries/wallets-queries';
+import { useWallets } from '../../queries/wallets-queries';
 
 const WalletsScreen = () => {
   const {

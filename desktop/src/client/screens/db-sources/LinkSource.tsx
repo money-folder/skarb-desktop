@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useLinkDbSource } from '../../client/queries/db-source-queries';
+import { useLinkDbSource } from '../../queries/db-source-queries';
 
 const LinkSource = () => {
   const linkDbSourceMutation = useLinkDbSource();
