@@ -1,35 +1,42 @@
 import React from 'react';
+import { useWallet } from '../../client/queries/wallets-queries';
+import { useWhistory } from '../../client/queries/whistory-queries';
 
-import { useWhistory } from '../../queries/whistory-queries';
-
-interface WalletHistoryProps {
-  walletId: string;
+interface WalletViewProps {
+  activeWalletId: string;
 }
 
-const WalletHistory = ({ walletId }: WalletHistoryProps) => {
-  const { data: whistoryList, isLoading, isError } = useWhistory(walletId);
+const WalletScreen = ({ activeWalletId }: WalletViewProps) => {
+  const { data: wallet } = useWallet(activeWalletId);
 
-  if (isLoading || !whistoryList) {
+  const {
+    data: whistoryList,
+    isLoading: isWhistoryLoading,
+    isError: isWhistoryError,
+  } = useWhistory(activeWalletId);
+
+  if (isWhistoryLoading) {
     return <div>Loading...</div>;
   }
 
-  if (isError) {
+  if (isWhistoryError || !whistoryList) {
     return <div>Error</div>;
   }
 
   return (
-    <div className="px-2 flex-grow">
-      <h2 className="font-extrabold text-xl">Wallet History</h2>
+    <div className="h-full w-full grid grid-cols-2 overflow-hidden">
+      <h2 className="col-span-2 text-center font-extrabold text-xl">
+        {wallet?.name}
+      </h2>
 
-      <div className="flex h-full">
-        <div className="w-1/2 h-full flex-grow overflow-auto">
+      <div className="mt-10 col-span-2 overflow-hidden">
+        <div className="h-full w-1/2 overflow-auto">
           <table className="w-full">
             <thead>
               <tr>
                 <th className="p-1 text-sm border-2 border-black">ID</th>
                 <th className="p-1 text-sm border-2 border-black">Amount</th>
                 <th className="p-1 text-sm border-2 border-black">Date</th>
-                {/* <th className="p-1 text-sm border-2 border-black">Controls</th> */}
               </tr>
             </thead>
             <tbody>
@@ -44,19 +51,14 @@ const WalletHistory = ({ walletId }: WalletHistoryProps) => {
                   <td className="p-1 text-sm text-center border-2 border-black">
                     {whistory.date}
                   </td>
-                  {/* <td className="p-1 text-sm text-center border-2 border-black">
-                  <button>Delete</button>
-                </td> */}
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-
-        <div className="w-1/2 flex-grow"></div>
       </div>
     </div>
   );
 };
 
-export default WalletHistory;
+export default WalletScreen;
