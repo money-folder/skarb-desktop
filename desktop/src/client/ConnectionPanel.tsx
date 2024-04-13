@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import DbSourcesView from './views/db-sources-view';
+import DbSourcesView from '../screens/db-sources';
 import { useCurrentConnection } from './queries/db-source-queries';
 
 const ConnectionPanel = () => {

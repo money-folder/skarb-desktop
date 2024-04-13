@@ -5,7 +5,7 @@ import {
   useCurrentConnection,
   useDbSources,
   useRemoveDbSource,
-} from '../../queries/db-source-queries';
+} from '../../client/queries/db-source-queries';
 import LinkSource from './LinkSource';
 
 const DbSourcesView = () => {

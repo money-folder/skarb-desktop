@@ -4,26 +4,30 @@ import React from 'react';
 import { useActiveWalletStore } from './stores/active-wallet-store';
 
 // views
-import MainView from './views/main-view';
-import Breadcrumbs from './views/breadcrumbs';
-import WalletView from './views/wallet-view';
+import WalletsScreen from '../screens/wallets-screen';
+import WalletScreen from '../screens/wallet-screen';
+
+// widgets
+import Breadcrumbs from './widgets/breadcrumbs';
 
 const App = () => {
   const activeWalletId = useActiveWalletStore((store) => store.activeWalletId);
 
   const renderCurrentView = () => {
     if (activeWalletId) {
-      return <WalletView activeWalletId={activeWalletId} />;
+      return <WalletScreen activeWalletId={activeWalletId} />;
     }
 
-    return <MainView />;
+    return <WalletsScreen />;
   };
 
   return (
-    <div className="p-5 w-full h-screen overflow-hidden flex flex-col">
-      <Breadcrumbs />
+    <div className="p-5 w-full h-screen overflow-hidden grid grid-cols-[repeat(2,_1fr)] grid-rows-[auto,_1fr]">
+      <div className="col-span-2">
+        <Breadcrumbs />
+      </div>
 
-      <div className="flex-grow">{renderCurrentView()}</div>
+      <div className="col-span-2 overflow-hidden">{renderCurrentView()}</div>
     </div>
   );
 };
