@@ -84,13 +84,20 @@ const selectWalletsHistoryByWalletId = async (walletId) => {
   return whistory;
 };
 
-const selectWalletHistory = async (walletId) => {
+const selectWalletHistory = async (
+  walletId,
+  { orderBy, orderDirection } = {},
+) => {
   const db = await initDatabaseConnection();
 
-  const whistory = await allSQL(
-    db,
-    `SELECT * FROM wallets_history INNER JOIN wallets on wallets.w_id = wallets_history.wh_walletId WHERE wh_walletId = ${walletId}`,
-  );
+  const query = `
+    SELECT * FROM wallets_history
+    INNER JOIN wallets on wallets.w_id = wallets_history.wh_walletId
+    WHERE wh_walletId = ${walletId}
+    ${orderBy ? `ORDER BY ${orderBy} ${orderDirection || ''}` : ''}
+  `;
+
+  const whistory = await allSQL(db, query);
 
   db.close();
 
