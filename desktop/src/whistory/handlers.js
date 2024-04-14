@@ -6,7 +6,12 @@ const {
 } = require('../../../formatters/whistory-formatter');
 
 async function getWhistory(event, walletId) {
-  const rawWhistory = await selectWalletHistory(walletId);
+  // I don't like it because it makes handler know the column name :/
+  const rawWhistory = await selectWalletHistory(walletId, {
+    orderBy: 'wh_createdAt',
+    orderDirection: 'desc',
+  });
+
   return rawWhistory.map(formatWhistoryFromDb);
 }
 
