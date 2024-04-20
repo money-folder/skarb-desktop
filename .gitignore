@@ -16,6 +16,4 @@ dist/
 # logs
 *.log
 
-
-
-
+*storybook.log
