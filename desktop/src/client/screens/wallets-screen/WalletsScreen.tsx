@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 // stores
 import { useActiveWalletStore } from '../../stores/active-wallet-store';
 
 // queries
 import { useWallets } from '../../queries/wallets-queries';
+import { OverlayContext } from '../../components/overlay/OverlayProvider';
+import AddWhistoryModal from '../../widgets/add-whistory/AddWhistoryModal';
 
 const WalletsScreen = () => {
   const {
@@ -13,9 +15,22 @@ const WalletsScreen = () => {
     isLoading: isWalletsLoading,
   } = useWallets();
 
+  const { addOverlay } = useContext(OverlayContext);
+
   const setActiveWalletId = useActiveWalletStore(
     (store) => store.setActiveWalletId,
   );
+
+  const onOpenClick = (walletId: string) => {
+    setActiveWalletId(walletId);
+  };
+
+  const onAddClick = (walletId: string) => {
+    console.log(walletId);
+
+    // show a modal with a 'add whistory entry'-form
+    addOverlay(({ removeSelf }) => <AddWhistoryModal close={removeSelf} />);
+  };
 
   if (isWalletsLoading) {
     return <div>Loading...</div>;
@@ -48,12 +63,19 @@ const WalletsScreen = () => {
                 <td className="text-left">{wallet.latestBalance || '-'}</td>
                 <td className="text-left">{wallet.currency}</td>
                 <td className="text-left">{wallet.latestBalanceTs || '-'}</td>
-                <td className="text-left">
+                <td className="flex gap-2 text-left">
                   <button
                     className="cursor-pointer hover:underline"
-                    onClick={() => setActiveWalletId(`${wallet.id}`)}
+                    onClick={() => onOpenClick(`${wallet.id}`)}
                   >
                     Open
+                  </button>
+
+                  <button
+                    className="cursor-pointer hover:underline"
+                    onClick={() => onAddClick(`${wallet.id}`)}
+                  >
+                    Add
                   </button>
                 </td>
               </tr>
