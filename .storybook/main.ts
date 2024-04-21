@@ -12,7 +12,18 @@ const config: StorybookConfig = {
     '@storybook/addon-essentials',
     '@chromatic-com/storybook',
     '@storybook/addon-interactions',
+    '@storybook/addon-styling-webpack',
   ],
+
+  // need it to add tailwind
+  webpackFinal(config, options) {
+    config.module?.rules?.push({
+      test: /\.css$/,
+      use: ['postcss-loader'],
+    });
+
+    return config;
+  },
   framework: {
     name: '@storybook/react-webpack5',
     options: {},
