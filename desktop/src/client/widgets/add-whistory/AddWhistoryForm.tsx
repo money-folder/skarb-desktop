@@ -40,7 +40,7 @@ const AddWhistoryForm = ({ close }: Props) => {
       </div>
 
       <div className="mt-5 flex justify-end gap-2">
-        <SecondaryButton text="Cancel" />
+        <SecondaryButton text="Cancel" onClick={close} />
         <PrimaryButton type="submit" text="Submit" />
       </div>
     </form>

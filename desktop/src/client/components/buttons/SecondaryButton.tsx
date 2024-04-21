@@ -8,6 +8,7 @@ interface SecondaryButtonProps {
 const SecondaryButton = ({ text, onClick }: SecondaryButtonProps) => {
   return (
     <button
+      type="button"
       className="px-5 py-2 text-black border-[1px] border-black cursor-pointer"
       onClick={onClick}
     >
