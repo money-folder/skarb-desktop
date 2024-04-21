@@ -35,6 +35,7 @@ interface Window {
 
       whistory: {
         list: (walletId: string) => Promise<DesktopWhistoryResponse[]>;
+        add: (walletId: string, amount: number, ts: number) => Promise<void>;
       };
     };
   };

@@ -23,7 +23,7 @@ const dropDatabaseColumnPrefix = (column) => column.split('_')[1];
  *
  * @returns {string}
  */
-const formatDateToSimpleString = (date) => {
+const formatDateToSQLiteString = (date) => {
   const year = date.getFullYear().toString().padStart(4, '0');
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const day = date.getDate().toString().padStart(2, '0');
@@ -38,6 +38,6 @@ const getDateDiffInDays = (date1, date2) => Math.abs(date2 - date1) / MS_IN_DAY;
 
 module.exports = {
   dropDatabaseColumnPrefix,
-  formatDateToSimpleString,
+  formatDateToSQLiteString,
   getDateDiffInDays,
 };

@@ -3,6 +3,8 @@ const { initDatabaseConnection, runSQL, allSQL } = require('../db');
 const insertWhistory = async ({ walletId, amount, date }) => {
   const db = await initDatabaseConnection();
 
+  // the date is saved in wrong time zone
+  // TODO: investigate the way SQLite saves the date
   if (date) {
     await runSQL(
       db,

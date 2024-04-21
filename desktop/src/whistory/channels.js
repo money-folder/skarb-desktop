@@ -1,5 +1,7 @@
 const LIST_WHISTORY = 'WHISTORY@LIST';
+const ADD_WHISTORY = 'WHISTORY@ADD';
 
 module.exports = {
   LIST_WHISTORY,
+  ADD_WHISTORY,
 };
