@@ -5,10 +5,11 @@ import Overlay from '../../components/overlay/Overlay';
 import AddWhistoryForm from './AddWhistoryForm';
 
 interface Props {
+  walletId: string;
   close: () => void;
 }
 
-const AddWhistoryModal = ({ close }: Props) => {
+const AddWhistoryModal = ({ walletId, close }: Props) => {
   return (
     <div onClick={close}>
       <Overlay>
@@ -17,7 +18,8 @@ const AddWhistoryModal = ({ close }: Props) => {
           onClick={(e) => e.stopPropagation()}
         >
           <h3 className="text-left font-bold text-lg">New Wallet Entry</h3>
-          <AddWhistoryForm close={close} />
+          {/* TODO: maybe just remove the form component and put its content here? */}
+          <AddWhistoryForm walletId={walletId} close={close} />
         </div>
       </Overlay>
     </div>

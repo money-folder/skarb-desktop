@@ -26,10 +26,10 @@ const WalletsScreen = () => {
   };
 
   const onAddClick = (walletId: string) => {
-    console.log(walletId);
-
     // show a modal with a 'add whistory entry'-form
-    addOverlay(({ removeSelf }) => <AddWhistoryModal close={removeSelf} />);
+    addOverlay(({ removeSelf }) => (
+      <AddWhistoryModal walletId={walletId} close={removeSelf} />
+    ));
   };
 
   if (isWalletsLoading) {

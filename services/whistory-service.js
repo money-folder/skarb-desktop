@@ -19,7 +19,7 @@ const { getTableCsvContent, exportData } = require('./exporting-service');
 const { formatWhistoryFromDb } = require('../formatters/whistory-formatter');
 
 // utils
-const { formatDateToSimpleString } = require('../utils/utils');
+const { formatDateToSQLiteString } = require('../utils/utils');
 const {
   chunkWhistoryByDays,
   getWhistorySpanDiff,
@@ -32,7 +32,7 @@ const exportWhistoryToCsv = async (walletsHistory, walletName) => {
       'csv',
       `whistory-${
         walletName ? `${walletName.split(' ').join('')}-` : ''
-      }${formatDateToSimpleString(new Date())}`,
+      }${formatDateToSQLiteString(new Date())}`,
       csvContent,
     );
   } catch (error) {

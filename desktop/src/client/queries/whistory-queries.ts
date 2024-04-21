@@ -1,4 +1,10 @@
-import { UseQueryResult, useQuery } from '@tanstack/react-query';
+import {
+  UseMutationResult,
+  UseQueryResult,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 import { DesktopWhistoryResponse } from '../types/whistory';
 
@@ -8,5 +14,31 @@ export const useWhistory = (
   return useQuery<DesktopWhistoryResponse[]>({
     queryKey: [`whistory-${walletId}`],
     queryFn: () => window.electron.ipcRenderer.whistory.list(walletId),
+  });
+};
+
+interface WhistoryParams {
+  walletId: string;
+  amount: number;
+  ts: number;
+}
+
+export const addWhistory = (): UseMutationResult<
+  void,
+  unknown,
+  WhistoryParams,
+  unknown
+> => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ walletId, amount, ts }) => {
+      return window.electron.ipcRenderer.whistory.add(walletId, amount, ts);
+    },
+
+    onSuccess: () => {
+      return queryClient.invalidateQueries({
+        queryKey: ['wallets'],
+      });
+    },
   });
 };
