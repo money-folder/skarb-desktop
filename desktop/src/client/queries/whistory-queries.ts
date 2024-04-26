@@ -56,3 +56,17 @@ export const useRemoveWhistory = (
     },
   });
 };
+
+export const useRestoreWhistory = (
+  walletId: string,
+): UseMutationResult<void, unknown, string, unknown> => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (whistoryId: string) =>
+      window.electron.ipcRenderer.whistory.restore(whistoryId),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`whistory-${walletId}`] });
+    },
+  });
+};

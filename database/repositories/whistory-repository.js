@@ -45,6 +45,24 @@ const deleteWalletHistorySoft = async (id) => {
   return updatedWalletHistory;
 };
 
+const restoreWalletHistory = async (id) => {
+  const db = await initDatabaseConnection();
+
+  await runSQL(
+    db,
+    `UPDATE wallets_history SET wh_deletedAt = null WHERE wh_id = ${id}`,
+  );
+
+  const updatedWalletHistory = await allSQL(
+    db,
+    `SELECT * FROM wallets_history WHERE wh_id = ${id}`,
+  );
+
+  db.close();
+
+  return updatedWalletHistory;
+};
+
 const deleteWalletHistoryHard = async (id) => {
   const db = await initDatabaseConnection();
 
@@ -113,4 +131,5 @@ module.exports = {
   selectWalletsHistory,
   selectWalletsHistoryByWalletId,
   selectWalletHistory,
+  restoreWalletHistory,
 };

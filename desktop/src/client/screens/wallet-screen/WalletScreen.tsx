@@ -2,10 +2,15 @@ import React from 'react';
 
 // queries
 import { useWallet } from '../../queries/wallets-queries';
-import { useRemoveWhistory, useWhistory } from '../../queries/whistory-queries';
+import {
+  useRemoveWhistory,
+  useRestoreWhistory,
+  useWhistory,
+} from '../../queries/whistory-queries';
 
 // icons
 import CrossIcon from '../../assets/cross.svg';
+import RestoreIcon from '../../assets/restore.svg';
 
 interface WalletViewProps {
   activeWalletId: string;
@@ -20,7 +25,8 @@ const WalletScreen = ({ activeWalletId }: WalletViewProps) => {
     isError: isWhistoryError,
   } = useWhistory(activeWalletId);
 
-  const { mutateAsync } = useRemoveWhistory(activeWalletId);
+  const { mutateAsync: softDelete } = useRemoveWhistory(activeWalletId);
+  const { mutateAsync: restore } = useRestoreWhistory(activeWalletId);
 
   if (isWhistoryLoading) {
     return <div>Loading...</div>;
@@ -31,10 +37,12 @@ const WalletScreen = ({ activeWalletId }: WalletViewProps) => {
   }
 
   const onDeleteClick = async (walletId: string) => {
-    await mutateAsync(walletId);
+    await softDelete(walletId);
   };
 
-  console.log(whistoryList);
+  const onRestoreClick = async (walletId: string) => {
+    await restore(walletId);
+  };
 
   return (
     <div className="h-full w-full grid grid-cols-2 overflow-hidden">
@@ -55,26 +63,40 @@ const WalletScreen = ({ activeWalletId }: WalletViewProps) => {
             </thead>
             <tbody>
               {whistoryList.map((whistory) => (
-                <tr
-                  key={whistory.id}
-                  className={`${whistory.deletedAt ? 'opacity-30' : ''}`}
-                >
-                  <td className="p-1 text-sm text-center border-2 border-black">
+                <tr key={whistory.id}>
+                  <td
+                    className={`p-1 text-sm text-center border-2 border-black ${whistory.deletedAt ? 'opacity-30' : ''}`}
+                  >
                     {whistory.id}
                   </td>
-                  <td className="p-1 text-sm text-center border-2 border-black">
+                  <td
+                    className={`p-1 text-sm text-center border-2 border-black ${whistory.deletedAt ? 'opacity-30' : ''}`}
+                  >
                     {whistory.amount}
                   </td>
-                  <td className="p-1 text-sm text-center border-2 border-black">
+                  <td
+                    className={`p-1 text-sm text-center border-2 border-black ${whistory.deletedAt ? 'opacity-30' : ''}`}
+                  >
                     {whistory.date}
                   </td>
-                  <td className="p-1 text-sm text-center border-2 border-black">
-                    <button
-                      className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
-                      onClick={() => onDeleteClick(`${whistory.id}`)}
-                    >
-                      <img src={CrossIcon} alt="cross icon" />
-                    </button>
+                  <td
+                    className={`p-1 text-sm text-center border-2 border-black`}
+                  >
+                    {whistory.deletedAt ? (
+                      <button
+                        className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
+                        onClick={() => onRestoreClick(`${whistory.id}`)}
+                      >
+                        <img src={RestoreIcon} alt="restore icon" />
+                      </button>
+                    ) : (
+                      <button
+                        className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
+                        onClick={() => onDeleteClick(`${whistory.id}`)}
+                      >
+                        <img src={CrossIcon} alt="cross icon" />
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}
