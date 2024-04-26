@@ -4,6 +4,7 @@ const formatWhistoryFromDb = (whistoryData) => ({
   wallet: whistoryData.w_name,
   date: whistoryData.wh_date,
   amount: whistoryData.wh_moneyAmount,
+  deletedAt: whistoryData.wh_deletedAt,
 });
 
 module.exports = {

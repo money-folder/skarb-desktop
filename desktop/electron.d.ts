@@ -10,12 +10,14 @@ interface DesktopWalletResponse extends Wallet {
   latestBalanceTs: string | null;
 }
 
+// TODO: remove duplication with whistory.ts
 interface DesktopWhistoryResponse {
   id: number;
   amount: number;
   date: string;
   wallet: string;
   walletId: number;
+  deletedAt: string | null;
 }
 
 interface Window {
@@ -36,6 +38,7 @@ interface Window {
       whistory: {
         list: (walletId: string) => Promise<DesktopWhistoryResponse[]>;
         add: (walletId: string, amount: number, ts: number) => Promise<void>;
+        softDelete: (walletId: string) => Promise<void>;
       };
     };
   };

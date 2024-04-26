@@ -12,4 +12,5 @@ export interface DesktopWhistoryResponse {
   date: string;
   wallet: string;
   walletId: number;
+  deletedAt: string | null;
 }

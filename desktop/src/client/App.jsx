@@ -5,7 +5,7 @@ import { useActiveWalletStore } from './stores/active-wallet-store';
 
 // views
 import WalletsScreen from './screens/wallets-screen/WalletsScreen';
-import WalletScreen from './screens/wallet-screen';
+import WalletScreen from './screens/wallet-screen/WalletScreen';
 
 // widgets
 import Breadcrumbs from './widgets/breadcrumbs';
