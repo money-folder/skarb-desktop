@@ -12,6 +12,7 @@ const {
   LIST_WHISTORY,
   ADD_WHISTORY,
   SOFT_DELETE_WHISTORY,
+  RESTORE_WHISTORY,
 } = require('./whistory/channels');
 
 contextBridge.exposeInMainWorld('electron', {
@@ -35,6 +36,7 @@ contextBridge.exposeInMainWorld('electron', {
         ipcRenderer.invoke(ADD_WHISTORY, walletId, amount, ts),
       softDelete: (whistoryId) =>
         ipcRenderer.invoke(SOFT_DELETE_WHISTORY, whistoryId),
+      restore: (whistoryId) => ipcRenderer.invoke(RESTORE_WHISTORY, whistoryId),
     },
   },
 });
