@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 
 import AddWhistoryModal from '../client/widgets/add-whistory/AddWhistoryModal';
 
@@ -13,6 +14,7 @@ type Story = StoryObj<typeof meta>;
 
 export const main: Story = {
   args: {
-    close: () => {},
+    walletId: '',
+    close: fn(),
   },
 };
