@@ -39,6 +39,7 @@ interface Window {
         list: (walletId: string) => Promise<DesktopWhistoryResponse[]>;
         add: (walletId: string, amount: number, ts: number) => Promise<void>;
         softDelete: (walletId: string) => Promise<void>;
+        hardDelete: (walletId: string) => Promise<void>;
         restore: (walletId: string) => Promise<void>;
       };
     };
