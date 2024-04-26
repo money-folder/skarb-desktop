@@ -3,6 +3,7 @@ import React from 'react';
 // queries
 import { useWallet } from '../../queries/wallets-queries';
 import {
+  useHardDeleteWhistory,
   useRemoveWhistory,
   useRestoreWhistory,
   useWhistory,
@@ -11,6 +12,7 @@ import {
 // icons
 import CrossIcon from '../../assets/cross.svg';
 import RestoreIcon from '../../assets/restore.svg';
+import TrashIcon from '../../assets/trash.svg';
 
 interface WalletViewProps {
   activeWalletId: string;
@@ -27,6 +29,7 @@ const WalletScreen = ({ activeWalletId }: WalletViewProps) => {
 
   const { mutateAsync: softDelete } = useRemoveWhistory(activeWalletId);
   const { mutateAsync: restore } = useRestoreWhistory(activeWalletId);
+  const { mutateAsync: hardDelete } = useHardDeleteWhistory(activeWalletId);
 
   if (isWhistoryLoading) {
     return <div>Loading...</div>;
@@ -42,6 +45,10 @@ const WalletScreen = ({ activeWalletId }: WalletViewProps) => {
 
   const onRestoreClick = async (walletId: string) => {
     await restore(walletId);
+  };
+
+  const onHardDeleteClick = async (walletId: string) => {
+    await hardDelete(walletId);
   };
 
   return (
@@ -83,12 +90,21 @@ const WalletScreen = ({ activeWalletId }: WalletViewProps) => {
                     className={`p-1 text-sm text-center border-2 border-black`}
                   >
                     {whistory.deletedAt ? (
-                      <button
-                        className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
-                        onClick={() => onRestoreClick(`${whistory.id}`)}
-                      >
-                        <img src={RestoreIcon} alt="restore icon" />
-                      </button>
+                      <span className="flex justify-around">
+                        <button
+                          className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
+                          onClick={() => onRestoreClick(`${whistory.id}`)}
+                        >
+                          <img src={RestoreIcon} alt="restore icon" />
+                        </button>
+
+                        <button
+                          className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
+                          onClick={() => onHardDeleteClick(`${whistory.id}`)}
+                        >
+                          <img src={TrashIcon} alt="restore icon" />
+                        </button>
+                      </span>
                     ) : (
                       <button
                         className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"

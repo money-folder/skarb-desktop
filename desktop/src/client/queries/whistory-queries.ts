@@ -70,3 +70,17 @@ export const useRestoreWhistory = (
     },
   });
 };
+
+export const useHardDeleteWhistory = (
+  walletId: string,
+): UseMutationResult<void, unknown, string, unknown> => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (whistoryId: string) =>
+      window.electron.ipcRenderer.whistory.hardDelete(whistoryId),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`whistory-${walletId}`] });
+    },
+  });
+};
