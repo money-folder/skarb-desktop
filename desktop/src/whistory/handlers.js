@@ -1,6 +1,7 @@
 const {
   selectWalletHistory,
   insertWhistory,
+  deleteWalletHistorySoft,
 } = require('../../../database/repositories/whistory-repository');
 const {
   formatWhistoryFromDb,
@@ -23,7 +24,12 @@ async function addWhistory(event, walletId, amount, ts) {
   await insertWhistory({ walletId, amount, date });
 }
 
+async function softDeleteWhistory(event, whistoryId) {
+  await deleteWalletHistorySoft(whistoryId);
+}
+
 module.exports = {
   getWhistory,
   addWhistory,
+  softDeleteWhistory,
 };
