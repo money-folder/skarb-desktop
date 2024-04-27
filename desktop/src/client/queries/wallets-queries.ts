@@ -77,7 +77,27 @@ export const useSoftDeleteWallet = (): UseMutationResult<
   });
 };
 
-export const useSoftRestoreWallet = (): UseMutationResult<
+export const useHardDeleteWallet = (): UseMutationResult<
+  void,
+  unknown,
+  string,
+  unknown
+> => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (walletId) => {
+      return window.electron.ipcRenderer.wallets.hardDelete(walletId);
+    },
+
+    onSuccess: () => {
+      return queryClient.invalidateQueries({
+        queryKey: ['wallets'],
+      });
+    },
+  });
+};
+
+export const useRestoreWallet = (): UseMutationResult<
   void,
   unknown,
   string,
