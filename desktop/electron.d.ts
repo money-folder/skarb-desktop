@@ -42,6 +42,7 @@ interface Window {
 
       wallets: {
         list: () => Promise<DesktopWalletResponse[]>;
+        create: (name: string, currencyId: string) => Promise<void>;
       };
 
       whistory: {

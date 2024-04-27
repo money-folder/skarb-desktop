@@ -7,7 +7,7 @@ const {
   CONNECT_TO_DB,
   GET_CURRENT_CONNECTION,
 } = require('./connection/channels');
-const { LIST_WALLETS } = require('./wallets/channels');
+const { LIST_WALLETS, CREATE_WALLET } = require('./wallets/channels');
 const {
   LIST_WHISTORY,
   ADD_WHISTORY,
@@ -34,6 +34,8 @@ contextBridge.exposeInMainWorld('electron', {
 
     wallets: {
       list: () => ipcRenderer.invoke(LIST_WALLETS),
+      create: (name, currencyId) =>
+        ipcRenderer.invoke(CREATE_WALLET, name, currencyId),
     },
 
     whistory: {

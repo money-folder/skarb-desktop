@@ -1,8 +1,11 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 
 // types
 import { Currency } from '../../types/currencies';
+
+// queries
+import { useCreateWallet } from '../../queries/wallets-queries';
 
 // components
 import PrimaryButton from '../../components/buttons/PrimaryButton';
@@ -16,7 +19,13 @@ interface Props {
 const CreateWalletForm = ({ currencies, close }: Props) => {
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = () => {};
+  const { mutateAsync } = useCreateWallet();
+
+  const onSubmit = async (e: FieldValues) => {
+    await mutateAsync({ name: e.name, currencyId: e.currency });
+
+    close();
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
