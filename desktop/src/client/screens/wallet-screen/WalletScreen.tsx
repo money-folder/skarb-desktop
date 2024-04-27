@@ -95,14 +95,14 @@ const WalletScreen = ({ activeWalletId }: WalletViewProps) => {
                           className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
                           onClick={() => onRestoreClick(`${whistory.id}`)}
                         >
-                          <img src={RestoreIcon} alt="restore icon" />
+                          <img src={RestoreIcon} alt="restore" />
                         </button>
 
                         <button
                           className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
                           onClick={() => onHardDeleteClick(`${whistory.id}`)}
                         >
-                          <img src={TrashIcon} alt="restore icon" />
+                          <img src={TrashIcon} alt="restore" />
                         </button>
                       </span>
                     ) : (
@@ -110,7 +110,7 @@ const WalletScreen = ({ activeWalletId }: WalletViewProps) => {
                         className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
                         onClick={() => onDeleteClick(`${whistory.id}`)}
                       >
-                        <img src={CrossIcon} alt="cross icon" />
+                        <img src={CrossIcon} alt="cross" />
                       </button>
                     )}
                   </td>

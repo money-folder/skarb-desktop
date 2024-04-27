@@ -5,8 +5,14 @@ import { useActiveWalletStore } from '../../stores/active-wallet-store';
 
 // queries
 import { useWallets } from '../../queries/wallets-queries';
+
+// components
 import { OverlayContext } from '../../components/overlay/OverlayProvider';
 import AddWhistoryModal from '../../widgets/add-whistory/AddWhistoryModal';
+
+// icons
+import OpenIcon from '../../assets/open.svg';
+import PlusIcon from '../../assets/plus.svg';
 
 const WalletsScreen = () => {
   const {
@@ -65,17 +71,17 @@ const WalletsScreen = () => {
                 <td className="text-left">{wallet.latestBalanceTs || '-'}</td>
                 <td className="flex gap-2 text-left">
                   <button
-                    className="cursor-pointer hover:underline"
+                    className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
                     onClick={() => onOpenClick(`${wallet.id}`)}
                   >
-                    Open
+                    <img src={OpenIcon} alt="open" />
                   </button>
 
                   <button
-                    className="cursor-pointer hover:underline"
+                    className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
                     onClick={() => onAddClick(`${wallet.id}`)}
                   >
-                    Add
+                    <img src={PlusIcon} alt="plus" />
                   </button>
                 </td>
               </tr>
