@@ -11,6 +11,7 @@ const {
   LIST_WALLETS,
   CREATE_WALLET,
   SOFT_DELETE_WALLET,
+  RESTORE_WALLET,
 } = require('./wallets/channels');
 const {
   LIST_WHISTORY,
@@ -42,6 +43,7 @@ contextBridge.exposeInMainWorld('electron', {
         ipcRenderer.invoke(CREATE_WALLET, name, currencyId),
       softDelete: (walletId) =>
         ipcRenderer.invoke(SOFT_DELETE_WALLET, walletId),
+      restore: (walletId) => ipcRenderer.invoke(RESTORE_WALLET, walletId),
     },
 
     whistory: {

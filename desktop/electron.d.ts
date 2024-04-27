@@ -45,6 +45,7 @@ interface Window {
         list: () => Promise<DesktopWalletResponse[]>;
         create: (name: string, currencyId: string) => Promise<void>;
         softDelete: (walletId: string) => Promise<void>;
+        restore: (walletId: string) => Promise<void>;
       };
 
       whistory: {
