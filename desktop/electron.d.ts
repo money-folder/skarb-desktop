@@ -3,6 +3,7 @@ interface Wallet {
   name: string;
   currency: string;
   createdAt: string;
+  deletedAt: string | null;
 }
 
 interface DesktopWalletResponse extends Wallet {
@@ -43,6 +44,7 @@ interface Window {
       wallets: {
         list: () => Promise<DesktopWalletResponse[]>;
         create: (name: string, currencyId: string) => Promise<void>;
+        softDelete: (walletId: string) => Promise<void>;
       };
 
       whistory: {

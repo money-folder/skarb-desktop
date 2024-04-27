@@ -79,7 +79,6 @@ const selectWalletsWithLatestWh = async () => {
       WHERE wh_deletedAt IS NULL
       GROUP BY wh_walletId
     ) wh ON wallets.w_id = wh.wh_walletid
-    WHERE w_deletedAt IS NULL
     ORDER BY w_id;
     `,
   );

@@ -11,7 +11,8 @@ const formatWalletWithLatestWhFromDb = (walletData) => ({
   currency: walletData.c_name,
   latestBalance: walletData.wh_moneyAmount,
   latestBalanceTs: walletData.wh_createdAt,
-  createdAt: walletData.wh_createdAt,
+  createdAt: walletData.w_createdAt,
+  deletedAt: walletData.w_deletedAt,
 });
 
 module.exports = {
