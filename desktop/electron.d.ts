@@ -20,6 +20,11 @@ interface DesktopWhistoryResponse {
   deletedAt: string | null;
 }
 
+interface Currency {
+  id: string;
+  name: string;
+}
+
 interface Window {
   electron: {
     ipcRenderer: {
@@ -31,8 +36,13 @@ interface Window {
         getCurrentConnection: () => Promise<string | null>;
       };
 
+      currencies: {
+        list: () => Promise<Currency[]>;
+      };
+
       wallets: {
         list: () => Promise<DesktopWalletResponse[]>;
+        create: (name: string, currencyId: string) => Promise<void>;
       };
 
       whistory: {

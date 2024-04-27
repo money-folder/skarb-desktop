@@ -52,7 +52,7 @@ const WalletScreen = ({ activeWalletId }: WalletViewProps) => {
   };
 
   return (
-    <div className="h-full w-full grid grid-cols-2 overflow-hidden">
+    <div className="h-full w-full grid grid-cols-2 grid-rows-[auto,_1fr] overflow-hidden">
       <h2 className="col-span-2 text-center font-extrabold text-xl">
         {wallet?.name}
       </h2>

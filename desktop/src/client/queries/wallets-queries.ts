@@ -1,5 +1,7 @@
 import {
+  UseMutationResult,
   UseQueryResult,
+  useMutation,
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
@@ -26,6 +28,31 @@ export const useWallet = (
       ]);
 
       return wallets?.find((wallet) => wallet.id === Number(walletId)) || null;
+    },
+  });
+};
+
+interface CreateWalletParams {
+  name: string;
+  currencyId: string;
+}
+
+export const useCreateWallet = (): UseMutationResult<
+  void,
+  unknown,
+  CreateWalletParams,
+  unknown
+> => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ name, currencyId }) => {
+      return window.electron.ipcRenderer.wallets.create(name, currencyId);
+    },
+
+    onSuccess: () => {
+      return queryClient.invalidateQueries({
+        queryKey: ['wallets'],
+      });
     },
   });
 };

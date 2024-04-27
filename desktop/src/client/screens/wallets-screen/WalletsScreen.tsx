@@ -5,10 +5,14 @@ import { useActiveWalletStore } from '../../stores/active-wallet-store';
 
 // queries
 import { useWallets } from '../../queries/wallets-queries';
+import { useCurrencies } from '../../queries/currencies-queries';
+
+// widgets
+import AddWhistoryModal from '../../widgets/add-whistory/AddWhistoryModal';
+import CreateWalletModal from '../../widgets/create-wallet/CreateWalletModal';
 
 // components
 import { OverlayContext } from '../../components/overlay/OverlayProvider';
-import AddWhistoryModal from '../../widgets/add-whistory/AddWhistoryModal';
 
 // icons
 import OpenIcon from '../../assets/open.svg';
@@ -21,6 +25,8 @@ const WalletsScreen = () => {
     isLoading: isWalletsLoading,
   } = useWallets();
 
+  const { data: currencies } = useCurrencies();
+
   const { addOverlay } = useContext(OverlayContext);
 
   const setActiveWalletId = useActiveWalletStore(
@@ -32,9 +38,14 @@ const WalletsScreen = () => {
   };
 
   const onAddClick = (walletId: string) => {
-    // show a modal with a 'add whistory entry'-form
     addOverlay(({ removeSelf }) => (
       <AddWhistoryModal walletId={walletId} close={removeSelf} />
+    ));
+  };
+
+  const onCreateWalletClick = () => {
+    addOverlay(({ removeSelf }) => (
+      <CreateWalletModal currencies={currencies!} close={removeSelf} />
     ));
   };
 
@@ -51,8 +62,18 @@ const WalletsScreen = () => {
       <h2 className="text-center font-extrabold text-xl">
         This is your Wallets
       </h2>
-      <div className="mt-10 flex justify-center">
-        <table className="w-2/3">
+
+      <div className="mt-10 flex flex-col items-center">
+        <div className="w-2/3">
+          <button
+            className="cursor-pointer hover:underline"
+            onClick={onCreateWalletClick}
+          >
+            Create Wallet
+          </button>
+        </div>
+
+        <table className="mt-10 w-2/3">
           <thead>
             <tr>
               <th className="text-left">Name</th>
