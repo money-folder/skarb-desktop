@@ -15,9 +15,8 @@ const { formatCurrencyFromDb } = require('../formatters/currency-formatter');
 const { formatWalletFromDb } = require('../formatters/wallets-formatter');
 
 const addCurrency = async (name) => {
-  const currenciesWithSameName = await selectCurrenciesByNameCaseInsensitive(
-    name,
-  );
+  const currenciesWithSameName =
+    await selectCurrenciesByNameCaseInsensitive(name);
 
   if (!currenciesWithSameName.length) {
     const result = await insertCurrency({ currency: name });

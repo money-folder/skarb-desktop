@@ -15,6 +15,7 @@ const {
   RESTORE_WHISTORY,
   HARD_DELETE_WHISTORY,
 } = require('./whistory/channels');
+const { LIST_CURRENCIES } = require('./currencies/channels');
 
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {
@@ -25,6 +26,10 @@ contextBridge.exposeInMainWorld('electron', {
         ipcRenderer.invoke(DELETE_DB_SOURCE, dbSource),
       connectToDb: (dbSource) => ipcRenderer.invoke(CONNECT_TO_DB, dbSource),
       getCurrentConnection: () => ipcRenderer.invoke(GET_CURRENT_CONNECTION),
+    },
+
+    currencies: {
+      list: () => ipcRenderer.invoke(LIST_CURRENCIES),
     },
 
     wallets: {
