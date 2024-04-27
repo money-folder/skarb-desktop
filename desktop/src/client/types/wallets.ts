@@ -3,6 +3,7 @@ export interface Wallet {
   name: string;
   currency: string;
   createdAt: string;
+  deletedAt: string | null;
 }
 
 export interface DesktopWalletResponse extends Wallet {

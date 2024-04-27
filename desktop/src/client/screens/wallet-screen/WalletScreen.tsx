@@ -87,10 +87,10 @@ const WalletScreen = ({ activeWalletId }: WalletViewProps) => {
                     {whistory.date}
                   </td>
                   <td
-                    className={`p-1 text-sm text-center border-2 border-black`}
+                    className={`p-1 space-x-2 text-sm text-center border-2 border-black`}
                   >
                     {whistory.deletedAt ? (
-                      <span className="flex justify-around">
+                      <>
                         <button
                           className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
                           onClick={() => onRestoreClick(`${whistory.id}`)}
@@ -104,7 +104,7 @@ const WalletScreen = ({ activeWalletId }: WalletViewProps) => {
                         >
                           <img src={TrashIcon} alt="restore" />
                         </button>
-                      </span>
+                      </>
                     ) : (
                       <button
                         className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
