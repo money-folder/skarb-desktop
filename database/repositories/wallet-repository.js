@@ -36,6 +36,21 @@ const deleteWalletSoft = async (id) => {
   return updatedWallet;
 };
 
+const restoreWallet = async (id) => {
+  const db = await initDatabaseConnection();
+
+  await runSQL(db, `UPDATE wallets SET w_deletedAt = null WHERE w_id = ${id}`);
+
+  const updatedWallet = await allSQL(
+    db,
+    `SELECT * FROM wallets WHERE w_id = ${id}`,
+  );
+
+  db.close();
+
+  return updatedWallet;
+};
+
 const deleteWalletHard = async (id) => {
   const db = await initDatabaseConnection();
 
@@ -136,4 +151,5 @@ module.exports = {
   selectWalletById,
   selectWalletsByCurrencyId,
   selectWalletsByNameCaseInsensitive,
+  restoreWallet,
 };

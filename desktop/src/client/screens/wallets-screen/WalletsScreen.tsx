@@ -4,7 +4,11 @@ import React, { useContext } from 'react';
 import { useActiveWalletStore } from '../../stores/active-wallet-store';
 
 // queries
-import { useSoftDeleteWallet, useWallets } from '../../queries/wallets-queries';
+import {
+  useSoftDeleteWallet,
+  useSoftRestoreWallet,
+  useWallets,
+} from '../../queries/wallets-queries';
 import { useCurrencies } from '../../queries/currencies-queries';
 
 // widgets
@@ -18,6 +22,7 @@ import { OverlayContext } from '../../components/overlay/OverlayProvider';
 import OpenIcon from '../../assets/open.svg';
 import PlusIcon from '../../assets/plus.svg';
 import CrossIcon from '../../assets/cross.svg';
+import RestoreIcon from '../../assets/restore.svg';
 
 const WalletsScreen = () => {
   const {
@@ -28,6 +33,7 @@ const WalletsScreen = () => {
 
   const { data: currencies } = useCurrencies();
   const { mutateAsync: softDeleteWallet } = useSoftDeleteWallet();
+  const { mutateAsync: restoreWallet } = useSoftRestoreWallet();
 
   const { addOverlay } = useContext(OverlayContext);
 
@@ -53,6 +59,10 @@ const WalletsScreen = () => {
 
   const onDeleteClick = async (id: string) => {
     await softDeleteWallet(id);
+  };
+
+  const onRestoreClick = async (id: string) => {
+    restoreWallet(id);
   };
 
   if (isWalletsLoading) {
@@ -132,7 +142,14 @@ const WalletsScreen = () => {
                   </button>
 
                   {wallet.deletedAt ? (
-                    <></>
+                    <>
+                      <button
+                        className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
+                        onClick={() => onRestoreClick(`${wallet.id}`)}
+                      >
+                        <img src={RestoreIcon} alt="restore" />
+                      </button>
+                    </>
                   ) : (
                     <>
                       <button
