@@ -6,8 +6,9 @@ import { useActiveWalletStore } from '../../stores/active-wallet-store';
 // queries
 import {
   useSoftDeleteWallet,
-  useSoftRestoreWallet,
+  useRestoreWallet,
   useWallets,
+  useHardDeleteWallet,
 } from '../../queries/wallets-queries';
 import { useCurrencies } from '../../queries/currencies-queries';
 
@@ -23,6 +24,7 @@ import OpenIcon from '../../assets/open.svg';
 import PlusIcon from '../../assets/plus.svg';
 import CrossIcon from '../../assets/cross.svg';
 import RestoreIcon from '../../assets/restore.svg';
+import TrashIcon from '../../assets/trash.svg';
 
 const WalletsScreen = () => {
   const {
@@ -33,7 +35,8 @@ const WalletsScreen = () => {
 
   const { data: currencies } = useCurrencies();
   const { mutateAsync: softDeleteWallet } = useSoftDeleteWallet();
-  const { mutateAsync: restoreWallet } = useSoftRestoreWallet();
+  const { mutateAsync: hardDeleteWallet } = useHardDeleteWallet();
+  const { mutateAsync: restoreWallet } = useRestoreWallet();
 
   const { addOverlay } = useContext(OverlayContext);
 
@@ -59,6 +62,10 @@ const WalletsScreen = () => {
 
   const onDeleteClick = async (id: string) => {
     await softDeleteWallet(id);
+  };
+
+  const onHardDeleteClick = async (id: string) => {
+    await hardDeleteWallet(id);
   };
 
   const onRestoreClick = async (id: string) => {
@@ -148,6 +155,12 @@ const WalletsScreen = () => {
                         onClick={() => onRestoreClick(`${wallet.id}`)}
                       >
                         <img src={RestoreIcon} alt="restore" />
+                      </button>
+                      <button
+                        className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
+                        onClick={() => onHardDeleteClick(`${wallet.id}`)}
+                      >
+                        <img src={TrashIcon} alt="restore" />
                       </button>
                     </>
                   ) : (

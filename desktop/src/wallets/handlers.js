@@ -3,6 +3,7 @@ const {
   insertWallet,
   deleteWalletSoft,
   restoreWallet,
+  deleteWalletHard,
 } = require('../../../database/repositories/wallet-repository');
 const {
   formatWalletWithLatestWhFromDb,
@@ -25,9 +26,14 @@ const handleRestoreWallet = async (event, walletId) => {
   await restoreWallet(walletId);
 };
 
+const handleHardDeleteWallet = async (event, walletId) => {
+  await deleteWalletHard(walletId);
+};
+
 module.exports = {
   listWallets,
   createWallet,
   softDeleteWallet,
   handleRestoreWallet,
+  handleHardDeleteWallet,
 };
