@@ -20,7 +20,7 @@ type Story = StoryObj<typeof meta>;
 export const main: Story = {
   args: {
     close: fn(),
-    currencies: [{ id: '1', name: 'Zł' }],
+    currencies: [{ id: '1', name: 'Zł', createdAt: '', deletedAt: null }],
   },
 
   decorators: [

@@ -3,6 +3,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 
 // screens
 import HomeScreen from './screens/home-screen/HomeScreen';
+import CurrenciesScreen from './screens/currencies-screen/CurrenciesScreen';
 import WalletsScreen from './screens/wallets-screen/WalletsScreen';
 import WalletScreen from './screens/wallet-screen/WalletScreen';
 
@@ -15,9 +16,10 @@ const App = () => {
       <HashRouter>
         <NavigationSidebar />
 
-        <div className="flex-grow">
+        <div className="p-5 flex-grow">
           <Routes>
             <Route path="/" element={<HomeScreen />} />
+            <Route path="/currencies" element={<CurrenciesScreen />} />
             <Route path="/wallets" element={<WalletsScreen />} />
             <Route path="/wallets/:id" element={<WalletScreen />} />
           </Routes>
