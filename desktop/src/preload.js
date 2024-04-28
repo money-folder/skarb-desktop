@@ -21,7 +21,7 @@ const {
   RESTORE_WHISTORY,
   HARD_DELETE_WHISTORY,
 } = require('./whistory/channels');
-const { LIST_CURRENCIES } = require('./currencies/channels');
+const { LIST_CURRENCIES, CREATE_CURRENCY } = require('./currencies/channels');
 
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {
@@ -36,6 +36,7 @@ contextBridge.exposeInMainWorld('electron', {
 
     currencies: {
       list: () => ipcRenderer.invoke(LIST_CURRENCIES),
+      create: (name) => ipcRenderer.invoke(CREATE_CURRENCY, name),
     },
 
     wallets: {
