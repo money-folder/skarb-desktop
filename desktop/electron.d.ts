@@ -41,6 +41,7 @@ interface Window {
 
       currencies: {
         list: () => Promise<Currency[]>;
+        create: (name: string) => Promise<void>;
       };
 
       wallets: {
