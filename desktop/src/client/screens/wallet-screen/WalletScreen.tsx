@@ -1,4 +1,7 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
+
+import { useActiveWalletStore } from '../../stores/active-wallet-store';
 
 // queries
 import { useWallet } from '../../queries/wallets-queries';
@@ -14,11 +17,9 @@ import CrossIcon from '../../assets/cross.svg';
 import RestoreIcon from '../../assets/restore.svg';
 import TrashIcon from '../../assets/trash.svg';
 
-interface WalletViewProps {
-  activeWalletId: string;
-}
+const WalletScreen = () => {
+  const activeWalletId = location.hash.split('/').pop() as string;
 
-const WalletScreen = ({ activeWalletId }: WalletViewProps) => {
   const { data: wallet } = useWallet(activeWalletId);
 
   const {
@@ -52,7 +53,7 @@ const WalletScreen = ({ activeWalletId }: WalletViewProps) => {
   };
 
   return (
-    <div className="h-full w-full grid grid-cols-2 grid-rows-[auto,_1fr] overflow-hidden">
+    <div className="px-5 py-5 h-full w-full grid grid-cols-2 grid-rows-[auto,_1fr] overflow-hidden">
       <h2 className="col-span-2 text-center font-extrabold text-xl">
         {wallet?.name}
       </h2>

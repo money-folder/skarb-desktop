@@ -1,33 +1,28 @@
 import React from 'react';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 
-// stores
-import { useActiveWalletStore } from './stores/active-wallet-store';
-
-// views
+// screens
+import HomeScreen from './screens/home-screen/HomeScreen';
 import WalletsScreen from './screens/wallets-screen/WalletsScreen';
 import WalletScreen from './screens/wallet-screen/WalletScreen';
 
 // widgets
-import Breadcrumbs from './widgets/breadcrumbs';
+import NavigationSidebar from './widgets/navigation/NavigationSidebar';
 
 const App = () => {
-  const activeWalletId = useActiveWalletStore((store) => store.activeWalletId);
-
-  const renderCurrentView = () => {
-    if (activeWalletId) {
-      return <WalletScreen activeWalletId={activeWalletId} />;
-    }
-
-    return <WalletsScreen />;
-  };
-
   return (
-    <div className="p-5 w-full h-screen overflow-hidden grid grid-cols-[repeat(2,_1fr)] grid-rows-[auto,_1fr]">
-      <div className="col-span-2">
-        <Breadcrumbs />
-      </div>
+    <div className="w-full h-screen overflow-hidden flex">
+      <HashRouter>
+        <NavigationSidebar />
 
-      <div className="col-span-2 overflow-hidden">{renderCurrentView()}</div>
+        <div className="flex-grow">
+          <Routes>
+            <Route path="/" element={<HomeScreen />} />
+            <Route path="/wallets" element={<WalletsScreen />} />
+            <Route path="/wallets/:id" element={<WalletScreen />} />
+          </Routes>
+        </div>
+      </HashRouter>
     </div>
   );
 };
