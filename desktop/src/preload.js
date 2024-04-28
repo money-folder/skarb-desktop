@@ -21,8 +21,13 @@ const {
   RESTORE_WHISTORY,
   HARD_DELETE_WHISTORY,
 } = require('./whistory/channels');
-const { LIST_CURRENCIES, CREATE_CURRENCY } = require('./currencies/channels');
+const {
+  LIST_CURRENCIES,
+  CREATE_CURRENCY,
+  SOFT_DELETE_CURRENCY,
+} = require('./currencies/channels');
 
+// TODO: investigate if I can simply call handlers instead of dispatching actions
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {
     connection: {
@@ -37,6 +42,8 @@ contextBridge.exposeInMainWorld('electron', {
     currencies: {
       list: () => ipcRenderer.invoke(LIST_CURRENCIES),
       create: (name) => ipcRenderer.invoke(CREATE_CURRENCY, name),
+      softDelete: (currencyId) =>
+        ipcRenderer.invoke(SOFT_DELETE_CURRENCY, currencyId),
     },
 
     wallets: {

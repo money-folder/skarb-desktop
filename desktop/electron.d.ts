@@ -42,6 +42,7 @@ interface Window {
       currencies: {
         list: () => Promise<Currency[]>;
         create: (name: string) => Promise<void>;
+        softDelete: (currency: string) => Promise<void>;
       };
 
       wallets: {
@@ -55,9 +56,9 @@ interface Window {
       whistory: {
         list: (walletId: string) => Promise<DesktopWhistoryResponse[]>;
         add: (walletId: string, amount: number, ts: number) => Promise<void>;
-        softDelete: (walletId: string) => Promise<void>;
-        hardDelete: (walletId: string) => Promise<void>;
-        restore: (walletId: string) => Promise<void>;
+        softDelete: (whistory: string) => Promise<void>;
+        hardDelete: (whistory: string) => Promise<void>;
+        restore: (whistory: string) => Promise<void>;
       };
     };
   };

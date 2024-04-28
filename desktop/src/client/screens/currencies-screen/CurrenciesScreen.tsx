@@ -1,13 +1,19 @@
 import React, { useContext } from 'react';
 
 // queries
-import { useCurrencies } from '../../queries/currencies-queries';
+import {
+  useCurrencies,
+  useSoftDeleteCurrency,
+} from '../../queries/currencies-queries';
 
 // widgets
 import CreateCurrencyModal from '../../widgets/create-currency/CreateCurrencyModal';
 
 // components
 import { OverlayContext } from '../../components/overlay/OverlayProvider';
+
+// icons
+import CrossIcon from '../../assets/cross.svg';
 
 const CurrenciesScreen = () => {
   const {
@@ -16,10 +22,16 @@ const CurrenciesScreen = () => {
     isLoading: isCurrenciesLoading,
   } = useCurrencies();
 
+  const { mutateAsync: softDeleteCurrency } = useSoftDeleteCurrency();
+
   const { addOverlay } = useContext(OverlayContext);
 
   const onCreateCurrencyClick = () => {
     addOverlay(({ removeSelf }) => <CreateCurrencyModal close={removeSelf} />);
+  };
+
+  const onSoftDeleteClick = async (walletId: string) => {
+    await softDeleteCurrency(walletId);
   };
 
   if (isCurrenciesLoading) {
@@ -50,25 +62,41 @@ const CurrenciesScreen = () => {
               <th className="p-1 text-sm border-2 border-black">Name</th>
               <th className="p-1 text-sm border-2 border-black">Created At</th>
               <th className="p-1 text-sm border-2 border-black">Deleted At</th>
+              <th className="p-1 text-sm border-2 border-black">Actions</th>
             </tr>
           </thead>
           <tbody>
             {currencies.map((currency) => (
               <tr key={currency.id}>
                 <td
-                  className={`p-1 text-sm text-center border-2 border-black ${false ? 'opacity-30' : ''}`}
+                  className={`p-1 text-sm text-center border-2 border-black ${currency.deletedAt ? 'opacity-30' : ''}`}
                 >
                   {currency.name}
                 </td>
                 <td
-                  className={`p-1 text-sm text-center border-2 border-black ${false ? 'opacity-30' : ''}`}
+                  className={`p-1 text-sm text-center border-2 border-black ${currency.deletedAt ? 'opacity-30' : ''}`}
                 >
                   {currency.createdAt}
                 </td>
                 <td
-                  className={`p-1 text-sm text-center border-2 border-black ${false ? 'opacity-30' : ''}`}
+                  className={`p-1 text-sm text-center border-2 border-black ${currency.deletedAt ? 'opacity-30' : ''}`}
                 >
                   {currency.deletedAt || '-'}
+                </td>
+
+                <td className="p-1 space-x-2 text-sm text-center border-2 border-black">
+                  {currency.deletedAt ? (
+                    <></>
+                  ) : (
+                    <>
+                      <button
+                        className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
+                        onClick={() => onSoftDeleteClick(`${currency.id}`)}
+                      >
+                        <img src={CrossIcon} alt="cross" />
+                      </button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}
