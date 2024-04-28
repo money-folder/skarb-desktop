@@ -9,7 +9,8 @@ const { setupCurrenciesHandlers } = require('./currencies');
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 1080,
+    // TODO: change the width before the release
+    width: 1480,
     height: 720,
     webPreferences: {
       // TODO: investigate if it's correct to set this to false
