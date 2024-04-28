@@ -18,15 +18,10 @@ export const useWallets = (): UseQueryResult<DesktopWalletResponse[]> => {
 export const useWallet = (
   walletId: string,
 ): UseQueryResult<DesktopWalletResponse | null> => {
-  const queryClient = useQueryClient();
-
   return useQuery<DesktopWalletResponse | null>({
     queryKey: [`wallets-${walletId}`],
-    queryFn: () => {
-      const wallets = queryClient.getQueryData<DesktopWalletResponse[]>([
-        'wallets',
-      ]);
-
+    queryFn: async () => {
+      const wallets = await window.electron.ipcRenderer.wallets.list();
       return wallets?.find((wallet) => wallet.id === Number(walletId)) || null;
     },
   });
