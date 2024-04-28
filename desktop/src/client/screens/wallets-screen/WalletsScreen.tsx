@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 // stores
 import { useActiveWalletStore } from '../../stores/active-wallet-store';
@@ -39,14 +40,6 @@ const WalletsScreen = () => {
   const { mutateAsync: restoreWallet } = useRestoreWallet();
 
   const { addOverlay } = useContext(OverlayContext);
-
-  const setActiveWalletId = useActiveWalletStore(
-    (store) => store.setActiveWalletId,
-  );
-
-  const onOpenClick = (walletId: string) => {
-    setActiveWalletId(walletId);
-  };
 
   const onAddClick = (walletId: string) => {
     addOverlay(({ removeSelf }) => (
@@ -134,12 +127,11 @@ const WalletsScreen = () => {
                   {wallet.latestBalanceTs || '-'}
                 </td>
                 <td className="p-1 space-x-2 text-sm text-center border-2 border-black">
-                  <button
-                    className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
-                    onClick={() => onOpenClick(`${wallet.id}`)}
-                  >
-                    <img src={OpenIcon} alt="open" />
-                  </button>
+                  <Link to={`/wallets/${wallet.id}`}>
+                    <button className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100">
+                      <img src={OpenIcon} alt="open" />
+                    </button>
+                  </Link>
 
                   <button
                     className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
