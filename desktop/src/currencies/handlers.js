@@ -3,6 +3,7 @@ const {
   insertCurrency,
   deleteCurrencySoft,
   restoreCurrency,
+  deleteCurrencyHard,
 } = require('../../../database/repositories/currency-repository');
 const {
   formatCurrencyFromDb,
@@ -25,9 +26,14 @@ const handleRestoreCurrency = async (event, currencyId) => {
   await restoreCurrency(currencyId);
 };
 
+const handleHardDeleteCurrency = async (event, currencyId) => {
+  await deleteCurrencyHard(currencyId);
+};
+
 module.exports = {
   handleListCurrencies,
   handleCreateCurrency,
   handleSoftDeleteCurrency,
   handleRestoreCurrency,
+  handleHardDeleteCurrency,
 };
