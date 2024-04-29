@@ -44,6 +44,7 @@ interface Window {
         create: (name: string) => Promise<void>;
         softDelete: (currency: string) => Promise<void>;
         restore: (currency: string) => Promise<void>;
+        hardDelete: (currency: string) => Promise<void>;
       };
 
       wallets: {

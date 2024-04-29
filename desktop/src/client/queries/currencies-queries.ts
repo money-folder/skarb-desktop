@@ -55,6 +55,26 @@ export const useSoftDeleteCurrency = (): UseMutationResult<
   });
 };
 
+export const useHardDeleteCurrency = (): UseMutationResult<
+  void,
+  unknown,
+  string,
+  unknown
+> => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (currencyId) => {
+      return window.electron.ipcRenderer.currencies.hardDelete(currencyId);
+    },
+
+    onSuccess: () => {
+      return queryClient.invalidateQueries({
+        queryKey: ['currencies'],
+      });
+    },
+  });
+};
+
 export const useRestoreCurrency = (): UseMutationResult<
   void,
   unknown,

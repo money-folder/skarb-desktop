@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 // queries
 import {
   useCurrencies,
+  useHardDeleteCurrency,
   useRestoreCurrency,
   useSoftDeleteCurrency,
 } from '../../queries/currencies-queries';
@@ -16,6 +17,7 @@ import { OverlayContext } from '../../components/overlay/OverlayProvider';
 // icons
 import CrossIcon from '../../assets/cross.svg';
 import RestoreIcon from '../../assets/restore.svg';
+import TrashIcon from '../../assets/trash.svg';
 
 const CurrenciesScreen = () => {
   const {
@@ -26,6 +28,7 @@ const CurrenciesScreen = () => {
 
   const { mutateAsync: softDeleteCurrency } = useSoftDeleteCurrency();
   const { mutateAsync: restoreCurrency } = useRestoreCurrency();
+  const { mutateAsync: hardDeleteCurrency } = useHardDeleteCurrency();
 
   const { addOverlay } = useContext(OverlayContext);
 
@@ -39,6 +42,10 @@ const CurrenciesScreen = () => {
 
   const onRestoreClick = async (currencyId: string) => {
     await restoreCurrency(currencyId);
+  };
+
+  const onHardDeleteClick = async (currencyId: string) => {
+    await hardDeleteCurrency(currencyId);
   };
 
   if (isCurrenciesLoading) {
@@ -99,6 +106,13 @@ const CurrenciesScreen = () => {
                         onClick={() => onRestoreClick(`${currency.id}`)}
                       >
                         <img src={RestoreIcon} alt="restore" />
+                      </button>
+
+                      <button
+                        className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
+                        onClick={() => onHardDeleteClick(`${currency.id}`)}
+                      >
+                        <img src={TrashIcon} alt="trash" />
                       </button>
                     </>
                   ) : (
