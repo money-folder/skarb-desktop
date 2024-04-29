@@ -25,6 +25,7 @@ const {
   LIST_CURRENCIES,
   CREATE_CURRENCY,
   SOFT_DELETE_CURRENCY,
+  RESTORE_CURRENCY,
 } = require('./currencies/channels');
 
 // TODO: investigate if I can simply call handlers instead of dispatching actions
@@ -44,6 +45,7 @@ contextBridge.exposeInMainWorld('electron', {
       create: (name) => ipcRenderer.invoke(CREATE_CURRENCY, name),
       softDelete: (currencyId) =>
         ipcRenderer.invoke(SOFT_DELETE_CURRENCY, currencyId),
+      restore: (currencyId) => ipcRenderer.invoke(RESTORE_CURRENCY, currencyId),
     },
 
     wallets: {

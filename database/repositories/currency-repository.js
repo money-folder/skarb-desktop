@@ -31,6 +31,23 @@ const deleteCurrencySoft = async (id) => {
   return updatedCurrency;
 };
 
+const restoreCurrency = async (id) => {
+  const db = await initDatabaseConnection();
+
+  await runSQL(
+    db,
+    `UPDATE currencies SET c_deletedAt = null WHERE c_id = ${id}`,
+  );
+
+  const updatedCurrency = await allSQL(
+    db,
+    `SELECT * FROM currencies WHERE c_id = ${id} LIMIT 1`,
+  );
+
+  db.close();
+  return updatedCurrency;
+};
+
 const deleteCurrencyHard = async (id) => {
   const db = await initDatabaseConnection();
 
@@ -79,6 +96,7 @@ const selectCurrenciesByNameCaseInsensitive = async (name) => {
 module.exports = {
   insertCurrency,
   deleteCurrencySoft,
+  restoreCurrency,
   deleteCurrencyHard,
   selectCurrencies,
   selectCurrencyById,
