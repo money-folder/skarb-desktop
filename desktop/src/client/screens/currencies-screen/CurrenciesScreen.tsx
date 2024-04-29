@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 // queries
 import {
   useCurrencies,
+  useRestoreCurrency,
   useSoftDeleteCurrency,
 } from '../../queries/currencies-queries';
 
@@ -14,6 +15,7 @@ import { OverlayContext } from '../../components/overlay/OverlayProvider';
 
 // icons
 import CrossIcon from '../../assets/cross.svg';
+import RestoreIcon from '../../assets/restore.svg';
 
 const CurrenciesScreen = () => {
   const {
@@ -23,6 +25,7 @@ const CurrenciesScreen = () => {
   } = useCurrencies();
 
   const { mutateAsync: softDeleteCurrency } = useSoftDeleteCurrency();
+  const { mutateAsync: restoreCurrency } = useRestoreCurrency();
 
   const { addOverlay } = useContext(OverlayContext);
 
@@ -30,8 +33,12 @@ const CurrenciesScreen = () => {
     addOverlay(({ removeSelf }) => <CreateCurrencyModal close={removeSelf} />);
   };
 
-  const onSoftDeleteClick = async (walletId: string) => {
-    await softDeleteCurrency(walletId);
+  const onSoftDeleteClick = async (currencyId: string) => {
+    await softDeleteCurrency(currencyId);
+  };
+
+  const onRestoreClick = async (currencyId: string) => {
+    await restoreCurrency(currencyId);
   };
 
   if (isCurrenciesLoading) {
@@ -86,7 +93,14 @@ const CurrenciesScreen = () => {
 
                 <td className="p-1 space-x-2 text-sm text-center border-2 border-black">
                   {currency.deletedAt ? (
-                    <></>
+                    <>
+                      <button
+                        className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
+                        onClick={() => onRestoreClick(`${currency.id}`)}
+                      >
+                        <img src={RestoreIcon} alt="restore" />
+                      </button>
+                    </>
                   ) : (
                     <>
                       <button
