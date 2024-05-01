@@ -1,4 +1,4 @@
-const { initDatabaseConnection, execSQL } = require('./db');
+const { getDatabaseConnection, execSQL } = require('./db');
 const { migrationsMap } = require('./queries/migrations');
 const {
   selectLatestMigration,
@@ -6,7 +6,7 @@ const {
 
 const createDatabase = async () => {
   try {
-    const db = await initDatabaseConnection();
+    const db = await getDatabaseConnection();
 
     await Promise.all(
       Object.entries(migrationsMap).map(async ([key, migration]) => {
@@ -31,7 +31,7 @@ const migrateDatabase = async () => {
     const latestMigration = await selectLatestMigration();
     console.table(latestMigration);
 
-    const db = await initDatabaseConnection();
+    const db = await getDatabaseConnection();
 
     Object.entries(migrationsMap).map(async ([key, migration]) => {
       if (key <= latestMigration.m_title) {

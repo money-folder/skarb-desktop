@@ -1,7 +1,7 @@
-const { initDatabaseConnection, runSQL, allSQL } = require('../db');
+const { getDatabaseConnection, runSQL, allSQL } = require('../db');
 
 const insertCurrency = async ({ currency }) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   await runSQL(db, `INSERT INTO currencies (c_name) VALUES ("${currency}")`);
 
@@ -15,7 +15,7 @@ const insertCurrency = async ({ currency }) => {
 };
 
 const deleteCurrencySoft = async (id) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   await runSQL(
     db,
@@ -32,7 +32,7 @@ const deleteCurrencySoft = async (id) => {
 };
 
 const restoreCurrency = async (id) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   await runSQL(
     db,
@@ -49,7 +49,7 @@ const restoreCurrency = async (id) => {
 };
 
 const deleteCurrencyHard = async (id) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   const currencyToDelete = await allSQL(
     db,
@@ -63,14 +63,14 @@ const deleteCurrencyHard = async (id) => {
 };
 
 const selectCurrencies = async () => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
   const currencies = await allSQL(db, `SELECT * FROM currencies ORDER BY c_id`);
   db.close();
   return currencies;
 };
 
 const selectCurrencyById = async (id) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   const currency = await allSQL(
     db,
@@ -82,7 +82,7 @@ const selectCurrencyById = async (id) => {
 };
 
 const selectCurrenciesByNameCaseInsensitive = async (name) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   const currency = await allSQL(
     db,

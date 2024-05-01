@@ -1,20 +1,8 @@
-const fs = require('node:fs/promises');
-
 const sqlite3 = require('sqlite3');
 
 const { getAbsoluteFilePath } = require('../utils/utils');
 
 let databaseConnection = null;
-
-const checkIfDatabaseExists = async () => {
-  try {
-    await fs.access('./skarb.sqlite3');
-    return true;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
-};
 
 const runSQL = (db, sql) =>
   new Promise((resolve, reject) => {
@@ -49,10 +37,23 @@ const allSQL = (db, sql) =>
     });
   });
 
-const initDatabaseConnection = async (filePath = './skarb.sqlite3') => {
-  try {
+const isConnectionAlreadyExists = async (filename) => {
+  if (!databaseConnection) {
+    return false;
+  }
+
+  const result = await databaseConnection;
+  return result.filename === filename;
+};
+
+const setDatabaseConnection = async (filename) => {
+  if (!databaseConnection && !filename) {
+    throw new Error('You must provide the database filename!');
+  }
+
+  if (filename && !(await isConnectionAlreadyExists(filename))) {
     databaseConnection = new Promise((resolve, reject) => {
-      const db = new sqlite3.Database(filePath, (err) => {
+      const db = new sqlite3.Database(filename, (err) => {
         if (err) {
           reject(err);
         }
@@ -60,11 +61,20 @@ const initDatabaseConnection = async (filePath = './skarb.sqlite3') => {
         resolve(db);
       });
     });
-
-    return databaseConnection;
-  } catch (error) {
-    return null;
   }
+
+  if (filename === null) {
+    databaseConnection = null;
+  }
+};
+
+const getDatabaseConnection = async () => {
+  const result = await databaseConnection;
+  if (!result) {
+    throw new Error('Connection is not initialized yet!');
+  }
+
+  return result;
 };
 
 const getDatabaseConnectionData = async () => {
@@ -77,8 +87,8 @@ const getDatabaseConnectionData = async () => {
 };
 
 module.exports = {
-  checkIfDatabaseExists,
-  initDatabaseConnection,
+  setDatabaseConnection,
+  getDatabaseConnection,
   getDatabaseConnectionData,
   runSQL,
   execSQL,

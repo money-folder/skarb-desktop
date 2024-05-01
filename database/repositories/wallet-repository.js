@@ -1,7 +1,7 @@
-const { initDatabaseConnection, runSQL, allSQL } = require('../db');
+const { getDatabaseConnection, runSQL, allSQL } = require('../db');
 
 const insertWallet = async ({ wallet, currencyId }) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   await runSQL(
     db,
@@ -19,7 +19,7 @@ const insertWallet = async ({ wallet, currencyId }) => {
 };
 
 const deleteWalletSoft = async (id) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   await runSQL(
     db,
@@ -37,7 +37,7 @@ const deleteWalletSoft = async (id) => {
 };
 
 const restoreWallet = async (id) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   await runSQL(db, `UPDATE wallets SET w_deletedAt = null WHERE w_id = ${id}`);
 
@@ -52,7 +52,7 @@ const restoreWallet = async (id) => {
 };
 
 const deleteWalletHard = async (id) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   const walletToDelete = await allSQL(
     db,
@@ -67,7 +67,7 @@ const deleteWalletHard = async (id) => {
 };
 
 const selectWallets = async () => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   const wallets = await allSQL(
     db,
@@ -80,7 +80,7 @@ const selectWallets = async () => {
 };
 
 const selectWalletsWithLatestWh = async () => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   const wallets = await allSQL(
     db,
@@ -104,7 +104,7 @@ const selectWalletsWithLatestWh = async () => {
 };
 
 const selectWalletById = async (id) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   const wallet = await allSQL(
     db,
@@ -117,7 +117,7 @@ const selectWalletById = async (id) => {
 };
 
 const selectWalletsByCurrencyId = async (currencyId) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   const wallets = await allSQL(
     db,
@@ -130,7 +130,7 @@ const selectWalletsByCurrencyId = async (currencyId) => {
 };
 
 const selectWalletsByNameCaseInsensitive = async (name) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   const wallets = await allSQL(
     db,

@@ -1,7 +1,7 @@
-const { initDatabaseConnection, runSQL, allSQL } = require('../db');
+const { getDatabaseConnection, runSQL, allSQL } = require('../db');
 
 const insertWhistory = async ({ walletId, amount, date }) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   // the date is saved in wrong time zone
   // TODO: investigate the way SQLite saves the date
@@ -28,7 +28,7 @@ const insertWhistory = async ({ walletId, amount, date }) => {
 };
 
 const deleteWalletHistorySoft = async (id) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   await runSQL(
     db,
@@ -46,7 +46,7 @@ const deleteWalletHistorySoft = async (id) => {
 };
 
 const restoreWalletHistory = async (id) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   await runSQL(
     db,
@@ -64,7 +64,7 @@ const restoreWalletHistory = async (id) => {
 };
 
 const deleteWalletHistoryHard = async (id) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   const walletHistoryToDelete = await allSQL(
     db,
@@ -79,7 +79,7 @@ const deleteWalletHistoryHard = async (id) => {
 };
 
 const selectWalletsHistory = async () => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   const whistory = await allSQL(
     db,
@@ -92,7 +92,7 @@ const selectWalletsHistory = async () => {
 };
 
 const selectWalletsHistoryByWalletId = async (walletId) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   const whistory = await allSQL(
     db,
@@ -108,7 +108,7 @@ const selectWalletHistory = async (
   walletId,
   { orderBy, orderDirection } = {},
 ) => {
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
 
   const query = `
     SELECT * FROM wallets_history
