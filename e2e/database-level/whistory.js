@@ -1,4 +1,4 @@
-const { initDatabaseConnection, allSQL } = require('../../database/db');
+const { getDatabaseConnection, allSQL } = require('../../database/db');
 const {
   insertCurrencies,
   insertWallets,
@@ -42,7 +42,7 @@ const testInsertingWhistory = async () => {
   await insertCurrencies();
   await insertWallets();
   await insertWhistory();
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
   const whistory = await allSQL(db, `SELECT * FROM wallets_history`);
   if (
     !checkIfAllItemsExist({
@@ -54,13 +54,11 @@ const testInsertingWhistory = async () => {
     db.close();
     throw new Error('testInsertingWhistory failed');
   }
-
-  db.close();
 };
 
 const testRemovingWhistory = async () => {
   await execAsync('skarb whistory rm -wh 3 --hard');
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
   const whistory = await allSQL(db, `SELECT * FROM wallets_history`);
   if (
     !checkIfAllItemsExist({
@@ -72,8 +70,6 @@ const testRemovingWhistory = async () => {
     db.close();
     throw new Error('testRemovingWhistory failed');
   }
-
-  db.close();
 };
 
 const testWhistory = async () => {

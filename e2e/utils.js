@@ -1,6 +1,11 @@
 const { exec } = require('child_process');
 const { promisify } = require('util');
 
+const {
+  setDatabaseConnection,
+  getDatabaseConnection,
+} = require('../database/db');
+
 const execAsync = promisify(exec);
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -57,6 +62,17 @@ const checkIfAllItemsExist = ({ arrayToCheck, referenceArray, fields }) =>
     ),
   );
 
+const wrapDatabaseLevelTest = (test) => async () => {
+  await setDatabaseConnection('./skarb.sqlite3');
+
+  await test();
+
+  const db = await getDatabaseConnection();
+  db.close();
+
+  await setDatabaseConnection(null);
+};
+
 module.exports = {
   execAsync,
   delay,
@@ -67,4 +83,5 @@ module.exports = {
   insertWallets,
   insertWhistory,
   checkIfAllItemsExist,
+  wrapDatabaseLevelTest,
 };
