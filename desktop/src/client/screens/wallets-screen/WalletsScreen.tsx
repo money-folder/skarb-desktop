@@ -75,9 +75,7 @@ const WalletsScreen = () => {
 
   return (
     <div className="w-full">
-      <h2 className="text-center font-extrabold text-xl">
-        This is your Wallets
-      </h2>
+      <h2 className="text-center font-extrabold text-xl">Wallets</h2>
 
       <div className="mt-10 flex flex-col items-center">
         <div className="w-2/3">
@@ -89,7 +87,7 @@ const WalletsScreen = () => {
           </button>
         </div>
 
-        <table className="mt-10 w-2/3">
+        <table className="mt-5 w-2/3">
           <thead>
             <tr>
               <th className="p-1 text-sm border-2 border-black">Name</th>

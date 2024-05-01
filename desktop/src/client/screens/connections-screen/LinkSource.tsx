@@ -21,17 +21,10 @@ const LinkSource = () => {
     await linkDbSourceMutation.mutateAsync(file.path);
   };
   return (
-    <>
-      <label className="cursor-pointer hover:underline" htmlFor="db-file-input">
-        Link a Source
-      </label>
-      <input
-        className="hidden"
-        id="db-file-input"
-        type="file"
-        onChange={onChange}
-      />
-    </>
+    <label className="cursor-pointer hover:underline">
+      Link a Source
+      <input className="hidden" type="file" onChange={onChange} />
+    </label>
   );
 };
 

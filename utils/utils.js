@@ -1,3 +1,5 @@
+const path = require('node:path');
+
 /**
  * @param {string} column
  *
@@ -36,8 +38,12 @@ const formatDateToSQLiteString = (date) => {
 const MS_IN_DAY = 1000 * 60 * 60 * 24;
 const getDateDiffInDays = (date1, date2) => Math.abs(date2 - date1) / MS_IN_DAY;
 
+const getAbsoluteFilePath = (filePath) =>
+  path.isAbsolute(filePath) ? filePath : path.resolve(filePath);
+
 module.exports = {
   dropDatabaseColumnPrefix,
   formatDateToSQLiteString,
   getDateDiffInDays,
+  getAbsoluteFilePath,
 };
