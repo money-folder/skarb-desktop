@@ -12,6 +12,12 @@ const NavigationSidebar = () => {
 
       <ul className="mt-10">
         <li>
+          <Link to="/connections" className="hover:underline">
+            Connections
+          </Link>
+        </li>
+
+        <li>
           <Link to="/currencies" className="hover:underline">
             Currencies
           </Link>

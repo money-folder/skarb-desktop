@@ -2,6 +2,8 @@ const fs = require('node:fs/promises');
 
 const sqlite3 = require('sqlite3');
 
+const { getAbsoluteFilePath } = require('../utils/utils');
+
 let databaseConnection = null;
 
 const checkIfDatabaseExists = async () => {
@@ -71,7 +73,7 @@ const getDatabaseConnectionData = async () => {
   }
 
   const result = await databaseConnection;
-  return result.filename;
+  return getAbsoluteFilePath(result.filename);
 };
 
 module.exports = {
