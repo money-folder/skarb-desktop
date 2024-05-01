@@ -75,9 +75,7 @@ const WalletsScreen = () => {
 
   return (
     <div className="w-full">
-      <h2 className="text-center font-extrabold text-xl">
-        This is your Wallets
-      </h2>
+      <h2 className="text-center font-extrabold text-xl">Wallets</h2>
 
       <div className="mt-10 flex flex-col items-center">
         <div className="w-2/3">
