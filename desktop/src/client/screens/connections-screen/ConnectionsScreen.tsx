@@ -11,6 +11,9 @@ import {
 // components
 import LinkSource from './LinkSource';
 
+// icons
+import CrossIcon from '../../assets/cross.svg';
+
 const ConnectionsScreen = () => {
   const { data: fileNames = [] } = useDbSources();
 
@@ -63,11 +66,11 @@ const ConnectionsScreen = () => {
                     )}
 
                     <button
-                      className="hover:underline disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:no-underline"
+                      className="w-4 h-4  hover:underline disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:no-underline"
                       onClick={() => onDelete(fileName)}
                       disabled={currentConnection === fileName}
                     >
-                      Delete
+                      <img src={CrossIcon} alt="cross" />
                     </button>
                   </span>
                 </td>
