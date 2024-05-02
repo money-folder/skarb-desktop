@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import { useWallets } from '../../queries/wallets-queries';
 import CreateCurrencyButton from '../create-currency/CreateCurrencyButton';
+import CreateWalletButton from '../create-wallet/CreateWalletButton';
 
 const NavigationSidebar = () => {
   const { data: walletsList } = useWallets();
@@ -42,16 +43,20 @@ const NavigationSidebar = () => {
           <CreateCurrencyButton />
         </li>
 
-        <li>
-          <NavLink
-            to="/wallets"
-            className={({ isActive }) =>
-              `${isActive ? 'text-white bg-black' : ''} hover:underline`
-            }
-            end
-          >
-            Wallets
-          </NavLink>
+        <li className="w-full inline-block">
+          <div className="w-full inline-flex justify-between items-center">
+            <NavLink
+              to="/wallets"
+              className={({ isActive }) =>
+                `${isActive ? 'text-white bg-black' : ''} hover:underline`
+              }
+              end
+            >
+              Wallets
+            </NavLink>
+
+            <CreateWalletButton />
+          </div>
 
           {walletsList ? (
             <ul className="pl-5">

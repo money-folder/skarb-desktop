@@ -1,9 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-// stores
-import { useActiveWalletStore } from '../../stores/active-wallet-store';
-
 // queries
 import {
   useSoftDeleteWallet,
@@ -11,10 +8,8 @@ import {
   useWallets,
   useHardDeleteWallet,
 } from '../../queries/wallets-queries';
-import { useCurrencies } from '../../queries/currencies-queries';
 
 // widgets
-import CreateWalletModal from '../../widgets/create-wallet/CreateWalletModal';
 import AddWhistoryModal from '../../widgets/add-whistory/AddWhistoryModal';
 
 // components
@@ -26,6 +21,7 @@ import PlusIcon from '../../assets/plus.svg';
 import CrossIcon from '../../assets/cross.svg';
 import RestoreIcon from '../../assets/restore.svg';
 import TrashIcon from '../../assets/trash.svg';
+import CreateWalletButton from '../../widgets/create-wallet/CreateWalletButton';
 
 const WalletsScreen = () => {
   const {
@@ -34,7 +30,6 @@ const WalletsScreen = () => {
     isLoading: isWalletsLoading,
   } = useWallets();
 
-  const { data: currencies } = useCurrencies();
   const { mutateAsync: softDeleteWallet } = useSoftDeleteWallet();
   const { mutateAsync: hardDeleteWallet } = useHardDeleteWallet();
   const { mutateAsync: restoreWallet } = useRestoreWallet();
@@ -44,12 +39,6 @@ const WalletsScreen = () => {
   const onAddClick = (walletId: string) => {
     addOverlay(({ removeSelf }) => (
       <AddWhistoryModal walletId={walletId} close={removeSelf} />
-    ));
-  };
-
-  const onCreateWalletClick = () => {
-    addOverlay(({ removeSelf }) => (
-      <CreateWalletModal currencies={currencies!} close={removeSelf} />
     ));
   };
 
@@ -79,12 +68,7 @@ const WalletsScreen = () => {
 
       <div className="mt-10 flex flex-col items-center">
         <div className="w-2/3">
-          <button
-            className="cursor-pointer hover:underline"
-            onClick={onCreateWalletClick}
-          >
-            Create Wallet
-          </button>
+          <CreateWalletButton text="Create Wallet" />
         </div>
 
         <table className="mt-5 w-2/3">
