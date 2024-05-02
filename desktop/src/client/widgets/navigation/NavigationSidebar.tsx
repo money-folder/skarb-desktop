@@ -1,32 +1,72 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+
+import { useWallets } from '../../queries/wallets-queries';
 
 const NavigationSidebar = () => {
+  const { data: walletsList } = useWallets();
+
   return (
     <div className="px-5 w-52 h-full border-r-2 border-black">
       <div className="pt-10 flex justify-center items-center">
-        <Link to="/">
+        <NavLink to="/">
           <div className="h-20 w-20 border-2 border-black rounded-full" />
-        </Link>
+        </NavLink>
       </div>
 
       <ul className="mt-10">
         <li>
-          <Link to="/connections" className="hover:underline">
+          <NavLink
+            to="/connections"
+            className={({ isActive }) =>
+              `${isActive ? 'text-white bg-black' : ''} hover:underline`
+            }
+            end
+          >
             Connections
-          </Link>
+          </NavLink>
         </li>
 
         <li>
-          <Link to="/currencies" className="hover:underline">
+          <NavLink
+            to="/currencies"
+            className={({ isActive }) =>
+              `${isActive ? 'text-white bg-black' : ''} hover:underline`
+            }
+            end
+          >
             Currencies
-          </Link>
+          </NavLink>
         </li>
 
         <li>
-          <Link to="/wallets" className="hover:underline">
+          <NavLink
+            to="/wallets"
+            className={({ isActive }) =>
+              `${isActive ? 'text-white bg-black' : ''} hover:underline`
+            }
+            end
+          >
             Wallets
-          </Link>
+          </NavLink>
+
+          {walletsList ? (
+            <ul className="pl-5">
+              {walletsList.map((wallet) => (
+                <li key={wallet.id} className="text-sm">
+                  <NavLink
+                    to={`/wallets/${wallet.id}`}
+                    className={({ isActive }) =>
+                      `${isActive ? 'text-white bg-black' : ''} hover:underline`
+                    }
+                    end
+                  >
+                    {wallet.name}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </li>
       </ul>
     </div>
