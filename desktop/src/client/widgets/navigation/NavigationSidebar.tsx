@@ -1,13 +1,17 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
+// queries
 import { useWallets } from '../../queries/wallets-queries';
+import { useCurrentConnection } from '../../queries/db-source-queries';
+
 import CreateCurrencyButton from '../create-currency/CreateCurrencyButton';
 import CreateWalletButton from '../create-wallet/CreateWalletButton';
 import AddWhistoryButton from '../add-whistory/AddWhistoryButton';
 
 const NavigationSidebar = () => {
   const { data: walletsList } = useWallets();
+  const { data: currentConnection } = useCurrentConnection();
 
   return (
     <div className="px-5 w-52 h-full border-r-2 border-black">
@@ -30,7 +34,9 @@ const NavigationSidebar = () => {
           </NavLink>
         </li>
 
-        <li className="w-full inline-flex justify-between items-center">
+        <li
+          className={`w-full inline-flex justify-between items-center ${!currentConnection ? 'pointer-events-none opacity-50' : ''} `}
+        >
           <NavLink
             to="/currencies"
             className={({ isActive }) =>
@@ -44,7 +50,9 @@ const NavigationSidebar = () => {
           <CreateCurrencyButton />
         </li>
 
-        <li className="w-full inline-block">
+        <li
+          className={`w-full inline-block ${!currentConnection ? 'pointer-events-none opacity-50' : ''} `}
+        >
           <div className="w-full inline-flex justify-between items-center">
             <NavLink
               to="/wallets"
@@ -64,7 +72,7 @@ const NavigationSidebar = () => {
               {walletsList.map((wallet) => (
                 <li
                   key={wallet.id}
-                  className="w-full inline-flex justify-between text-sm"
+                  className={`w-full inline-flex justify-between items-center text-sm ${!currentConnection ? 'pointer-events-none opacity-50' : ''} `}
                 >
                   <NavLink
                     to={`/wallets/${wallet.id}`}
