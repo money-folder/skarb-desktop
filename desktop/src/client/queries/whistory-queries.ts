@@ -35,10 +35,15 @@ export const addWhistory = (): UseMutationResult<
       return window.electron.ipcRenderer.whistory.add(walletId, amount, ts);
     },
 
-    onSuccess: () => {
-      return queryClient.invalidateQueries({
-        queryKey: ['wallets'],
-      });
+    onSuccess: (data, variables) => {
+      return Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ['wallets'],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [`whistory-${variables.walletId}`],
+        }),
+      ]);
     },
   });
 };
