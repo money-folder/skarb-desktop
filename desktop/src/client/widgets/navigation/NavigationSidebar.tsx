@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 const NavigationSidebar = () => {
   return (
-    <div className="px-5 w-52 border-r-2 border-black">
-      <div className="mt-10 flex justify-center items-center">
+    <div className="px-5 w-52 h-full border-r-2 border-black">
+      <div className="pt-10 flex justify-center items-center">
         <Link to="/">
           <div className="h-20 w-20 border-2 border-black rounded-full" />
         </Link>

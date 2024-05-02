@@ -70,7 +70,7 @@ const CurrenciesScreen = () => {
           </button>
         </div>
 
-        <table className="mt-10 w-2/3">
+        <table className="mt-5 w-2/3">
           <thead>
             <tr>
               <th className="p-1 text-sm border-2 border-black">Name</th>
