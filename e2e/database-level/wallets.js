@@ -1,4 +1,4 @@
-const { initDatabaseConnection, allSQL } = require('../../database/db');
+const { getDatabaseConnection, allSQL } = require('../../database/db');
 const {
   insertCurrencies,
   insertWallets,
@@ -45,7 +45,7 @@ const expectedArrayAfterRemoving = [
 const testInsertingWallets = async () => {
   await insertCurrencies();
   await insertWallets();
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
   const wallets = await allSQL(db, `SELECT * FROM wallets ORDER BY w_id`);
   if (
     !checkIfAllItemsExist({
@@ -57,13 +57,11 @@ const testInsertingWallets = async () => {
     db.close();
     throw new Error('testInsertingWallets failed');
   }
-
-  db.close();
 };
 
 const testRemovingWallets = async () => {
   await execAsync('skarb wallets rm -w 3 --hard');
-  const db = await initDatabaseConnection();
+  const db = await getDatabaseConnection();
   const wallets = await allSQL(db, `SELECT * FROM wallets ORDER BY w_id`);
   if (
     !checkIfAllItemsExist({
@@ -75,8 +73,6 @@ const testRemovingWallets = async () => {
     db.close();
     throw new Error('testRemovingWallets failed');
   }
-
-  db.close();
 };
 
 const testWallets = async () => {

@@ -4,6 +4,9 @@ const { program } = require('commander');
 
 const { logger, decorateWithArgsLogger } = require('./logger');
 
+// database
+const { setDatabaseConnection } = require('../database/db');
+
 // controllers
 const {
   handleInit,
@@ -134,16 +137,21 @@ whistoryPlot
   .option('-s, --span <span>', 'Span in days', '1')
   .action(decorateWithArgsLogger(handlePlotWhistoryDiff));
 
-program.parse(process.argv);
-
 process.on('uncaughtException', async (err) => {
   await logger.error('uncaughtException', err);
+  process.exit(1);
 });
 
 process.on('unhandledRejection', async (err) => {
   await logger.error('unhandledRejection', err);
+  process.exit(1);
 });
 
 process.on('exit', async (code) => {
   await logger.info('Skarb CLI exited with code', code);
 });
+
+(async () => {
+  await setDatabaseConnection('./skarb.sqlite3');
+  program.parse(process.argv);
+})();
