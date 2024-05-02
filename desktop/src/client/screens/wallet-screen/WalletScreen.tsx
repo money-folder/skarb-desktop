@@ -18,7 +18,9 @@ import RestoreIcon from '../../assets/restore.svg';
 import TrashIcon from '../../assets/trash.svg';
 
 const WalletScreen = () => {
-  const activeWalletId = location.hash.split('/').pop() as string;
+  const location = useLocation();
+
+  const activeWalletId = location.pathname.split('/').pop() as string;
 
   const { data: wallet } = useWallet(activeWalletId);
 
