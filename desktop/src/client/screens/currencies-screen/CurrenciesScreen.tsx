@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 // queries
 import {
@@ -9,10 +9,7 @@ import {
 } from '../../queries/currencies-queries';
 
 // widgets
-import CreateCurrencyModal from '../../widgets/create-currency/CreateCurrencyModal';
-
-// components
-import { OverlayContext } from '../../components/overlay/OverlayProvider';
+import CreateCurrencyButton from '../../widgets/create-currency/CreateCurrencyButton';
 
 // icons
 import CrossIcon from '../../assets/cross.svg';
@@ -29,12 +26,6 @@ const CurrenciesScreen = () => {
   const { mutateAsync: softDeleteCurrency } = useSoftDeleteCurrency();
   const { mutateAsync: restoreCurrency } = useRestoreCurrency();
   const { mutateAsync: hardDeleteCurrency } = useHardDeleteCurrency();
-
-  const { addOverlay } = useContext(OverlayContext);
-
-  const onCreateCurrencyClick = () => {
-    addOverlay(({ removeSelf }) => <CreateCurrencyModal close={removeSelf} />);
-  };
 
   const onSoftDeleteClick = async (currencyId: string) => {
     await softDeleteCurrency(currencyId);
@@ -62,12 +53,7 @@ const CurrenciesScreen = () => {
 
       <div className="mt-10 w-full flex flex-col items-center">
         <div className="w-2/3">
-          <button
-            className="cursor-pointer hover:underline"
-            onClick={onCreateCurrencyClick}
-          >
-            Create Currency
-          </button>
+          <CreateCurrencyButton text="Create Currency" />
         </div>
 
         <table className="mt-5 w-2/3">
