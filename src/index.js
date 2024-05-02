@@ -139,10 +139,12 @@ whistoryPlot
 
 process.on('uncaughtException', async (err) => {
   await logger.error('uncaughtException', err);
+  process.exit(1);
 });
 
 process.on('unhandledRejection', async (err) => {
   await logger.error('unhandledRejection', err);
+  process.exit(1);
 });
 
 process.on('exit', async (code) => {

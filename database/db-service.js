@@ -19,8 +19,6 @@ const createDatabase = async () => {
         }
       }),
     );
-
-    db.close();
   } catch (error) {
     console.error(error);
   }
@@ -42,8 +40,6 @@ const migrateDatabase = async () => {
 
       await execSQL(db, migration.sql);
     });
-
-    db.close();
   } catch (error) {
     console.error(error);
   }

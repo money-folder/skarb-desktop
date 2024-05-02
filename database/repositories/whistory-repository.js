@@ -22,8 +22,6 @@ const insertWhistory = async ({ walletId, amount, date }) => {
     `SELECT * FROM wallets_history WHERE wh_walletId = ${walletId} ORDER BY wh_id DESC LIMIT 1`,
   );
 
-  db.close();
-
   return newWhistoryEntry;
 };
 
@@ -39,8 +37,6 @@ const deleteWalletHistorySoft = async (id) => {
     db,
     `SELECT * FROM wallets_history WHERE wh_id = ${id}`,
   );
-
-  db.close();
 
   return updatedWalletHistory;
 };
@@ -58,8 +54,6 @@ const restoreWalletHistory = async (id) => {
     `SELECT * FROM wallets_history WHERE wh_id = ${id}`,
   );
 
-  db.close();
-
   return updatedWalletHistory;
 };
 
@@ -73,8 +67,6 @@ const deleteWalletHistoryHard = async (id) => {
 
   await runSQL(db, `DELETE FROM wallets_history WHERE wh_id = ${id}`);
 
-  db.close();
-
   return walletHistoryToDelete;
 };
 
@@ -86,8 +78,6 @@ const selectWalletsHistory = async () => {
     `SELECT * FROM wallets_history INNER JOIN wallets on wallets.w_id = wallets_history.wh_walletId ORDER BY wh_date DESC`,
   );
 
-  db.close();
-
   return whistory;
 };
 
@@ -98,8 +88,6 @@ const selectWalletsHistoryByWalletId = async (walletId) => {
     db,
     `SELECT * FROM wallets_history WHERE wh_walletId = ${walletId}`,
   );
-
-  db.close();
 
   return whistory;
 };
@@ -118,8 +106,6 @@ const selectWalletHistory = async (
   `;
 
   const whistory = await allSQL(db, query);
-
-  db.close();
 
   return whistory;
 };

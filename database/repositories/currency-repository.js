@@ -10,7 +10,6 @@ const insertCurrency = async ({ currency }) => {
     `SELECT * FROM currencies ORDER BY c_createdAt DESC LIMIT 1`,
   );
 
-  db.close();
   return latestInserted;
 };
 
@@ -27,7 +26,6 @@ const deleteCurrencySoft = async (id) => {
     `SELECT * FROM currencies WHERE c_id = ${id} LIMIT 1`,
   );
 
-  db.close();
   return updatedCurrency;
 };
 
@@ -44,7 +42,6 @@ const restoreCurrency = async (id) => {
     `SELECT * FROM currencies WHERE c_id = ${id} LIMIT 1`,
   );
 
-  db.close();
   return updatedCurrency;
 };
 
@@ -58,14 +55,12 @@ const deleteCurrencyHard = async (id) => {
 
   await runSQL(db, `DELETE FROM currencies WHERE c_id = ${id}`);
 
-  db.close();
   return currencyToDelete;
 };
 
 const selectCurrencies = async () => {
   const db = await getDatabaseConnection();
   const currencies = await allSQL(db, `SELECT * FROM currencies ORDER BY c_id`);
-  db.close();
   return currencies;
 };
 
@@ -77,7 +72,6 @@ const selectCurrencyById = async (id) => {
     `SELECT * FROM currencies WHERE c_id = ${id} LIMIT 1`,
   );
 
-  db.close();
   return currency;
 };
 
@@ -89,7 +83,6 @@ const selectCurrenciesByNameCaseInsensitive = async (name) => {
     `SELECT * FROM currencies WHERE LOWER(c_name) = LOWER("${name}")`,
   );
 
-  db.close();
   return currency;
 };
 

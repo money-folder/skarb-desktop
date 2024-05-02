@@ -8,8 +8,6 @@ const selectLatestMigration = async () => {
     'SELECT * FROM migrations ORDER BY m_title DESC LIMIT 1',
   );
 
-  db.close();
-
   return latestMigration;
 };
 
