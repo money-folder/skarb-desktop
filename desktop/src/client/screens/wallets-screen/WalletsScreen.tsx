@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 // queries
@@ -10,18 +10,14 @@ import {
 } from '../../queries/wallets-queries';
 
 // widgets
-import AddWhistoryModal from '../../widgets/add-whistory/AddWhistoryModal';
-
-// components
-import { OverlayContext } from '../../components/overlay/OverlayProvider';
+import CreateWalletButton from '../../widgets/create-wallet/CreateWalletButton';
+import AddWhistoryButton from '../../widgets/add-whistory/AddWhistoryButton';
 
 // icons
 import OpenIcon from '../../assets/open.svg';
-import PlusIcon from '../../assets/plus.svg';
 import CrossIcon from '../../assets/cross.svg';
 import RestoreIcon from '../../assets/restore.svg';
 import TrashIcon from '../../assets/trash.svg';
-import CreateWalletButton from '../../widgets/create-wallet/CreateWalletButton';
 
 const WalletsScreen = () => {
   const {
@@ -33,14 +29,6 @@ const WalletsScreen = () => {
   const { mutateAsync: softDeleteWallet } = useSoftDeleteWallet();
   const { mutateAsync: hardDeleteWallet } = useHardDeleteWallet();
   const { mutateAsync: restoreWallet } = useRestoreWallet();
-
-  const { addOverlay } = useContext(OverlayContext);
-
-  const onAddClick = (walletId: string) => {
-    addOverlay(({ removeSelf }) => (
-      <AddWhistoryModal walletId={walletId} close={removeSelf} />
-    ));
-  };
 
   const onDeleteClick = async (id: string) => {
     await softDeleteWallet(id);
@@ -115,12 +103,7 @@ const WalletsScreen = () => {
                     </button>
                   </Link>
 
-                  <button
-                    className="w-4 h-4 cursor-pointer opacity-70 hover:opacity-100"
-                    onClick={() => onAddClick(`${wallet.id}`)}
-                  >
-                    <img src={PlusIcon} alt="plus" />
-                  </button>
+                  <AddWhistoryButton walletId={`${wallet.id}`} />
 
                   {wallet.deletedAt ? (
                     <>
