@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { useWallets } from '../../queries/wallets-queries';
+import CreateCurrencyButton from '../create-currency/CreateCurrencyButton';
 
 const NavigationSidebar = () => {
   const { data: walletsList } = useWallets();
@@ -27,7 +28,7 @@ const NavigationSidebar = () => {
           </NavLink>
         </li>
 
-        <li>
+        <li className="w-full inline-flex justify-between items-center">
           <NavLink
             to="/currencies"
             className={({ isActive }) =>
@@ -37,6 +38,8 @@ const NavigationSidebar = () => {
           >
             Currencies
           </NavLink>
+
+          <CreateCurrencyButton />
         </li>
 
         <li>
