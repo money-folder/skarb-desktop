@@ -1,8 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { useActiveWalletStore } from '../../stores/active-wallet-store';
-
 // queries
 import { useWallet } from '../../queries/wallets-queries';
 import {
@@ -16,6 +14,7 @@ import {
 import CrossIcon from '../../assets/cross.svg';
 import RestoreIcon from '../../assets/restore.svg';
 import TrashIcon from '../../assets/trash.svg';
+import WalletHistoryChart from '../../widgets/wallet-history-chart/WalletHistoryChart';
 
 const WalletScreen = () => {
   const location = useLocation();
@@ -60,8 +59,8 @@ const WalletScreen = () => {
         {wallet?.name}
       </h2>
 
-      <div className="mt-10 col-span-2 overflow-hidden">
-        <div className="h-full w-1/2 overflow-auto">
+      <div className="mt-10 col-span-2 grid grid-cols-[minmax(350px,_auto)_1fr] overflow-hidden">
+        <div className="h-full w-full overflow-auto">
           <table className="w-full">
             <thead>
               <tr>
@@ -121,6 +120,10 @@ const WalletScreen = () => {
               ))}
             </tbody>
           </table>
+        </div>
+
+        <div className="px-5 flex justify-center items-start">
+          <WalletHistoryChart width={600} height={300} list={whistoryList} />
         </div>
       </div>
     </div>

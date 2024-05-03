@@ -20,7 +20,7 @@ const dropDatabaseColumnPrefix = (column) => column.split('_')[1];
  * @param date
  *
  * @example
- * // returns '2021-09-01T12-00-00'
+ * // returns '2021-09-01 12:00:00'
  * getReadableDate(new Date('2021-09-01T12:00:00'))
  *
  * @returns {string}
@@ -32,7 +32,7 @@ const formatDateToSQLiteString = (date) => {
   const hours = date.getHours().toString().padStart(2, '0');
   const minutes = date.getMinutes().toString().padStart(2, '0');
   const seconds = date.getSeconds().toString().padStart(2, '0');
-  return `${year}-${month}-${day}T${hours}-${minutes}-${seconds}`;
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
 
 const MS_IN_DAY = 1000 * 60 * 60 * 24;
