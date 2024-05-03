@@ -5,9 +5,8 @@ import {
   createHorizontalAxisPoints,
   createVerticalAxisPoints,
   createWhistoryPoints,
-  drawLine,
-  drawLinesFromPoints,
 } from './utils';
+import { drawLine, drawLinesFromPoints } from '../../services/canvas-services';
 
 interface Props {
   width: number;

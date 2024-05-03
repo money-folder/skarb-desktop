@@ -60,53 +60,6 @@ export const createWhistoryPoints = (
     .sort((p1, p2) => p2.x - p1.x);
 };
 
-interface DrawLineParams {
-  lineWidth?: number;
-}
-
-export const drawLine = (
-  context: CanvasRenderingContext2D,
-  x1: number,
-  y1: number,
-  x2: number,
-  y2: number,
-  params?: DrawLineParams,
-) => {
-  context.beginPath();
-
-  context.moveTo(x1, y1);
-  context.lineTo(x2, y2);
-
-  if (params?.lineWidth) {
-    context.lineWidth = params.lineWidth;
-  }
-
-  context.stroke();
-};
-
-interface Point {
-  x: number;
-  y: number;
-}
-
-export const drawLinesFromPoints = (
-  context: CanvasRenderingContext2D,
-  points: Point[],
-) => {
-  points.forEach((point, index) => {
-    // draw a line
-    if (index < points.length - 1) {
-      drawLine(
-        context,
-        point.x,
-        point.y,
-        points[index + 1].x,
-        points[index + 1].y,
-      );
-    }
-  });
-};
-
 export const createHorizontalAxisPoints = (
   whistoryList: DesktopWhistoryResponse[],
   canvasParams: CanvasParams,
