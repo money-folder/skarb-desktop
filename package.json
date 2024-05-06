@@ -1,8 +1,8 @@
 {
   "name": "skarb",
   "version": "1.1.0",
-  "description": "",
-  "main": "./cli/index.js",
+  "description": "An app for managing personal finances",
+  "main": "./desktop/src/main.js",
   "bin": {
     "skarb": "./cli/index.js"
   },
@@ -12,14 +12,17 @@
     "desktop:client:serve": "webpack serve --config ./desktop/webpack.config.js --mode development",
     "desktop:main:dev": "nodemon -w ./desktop/src --exec electron ./desktop/src/main.js",
     "desktop:dev": "concurrently \"npm run desktop:client:build:watch\" \"npm run desktop:main:dev\"",
-    "start": "node ./cli/index.js",
+    "cli:start": "node ./cli/index.js",
     "lint": "eslint . --ext .js",
     "e2e": "node ./e2e/index.js",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "start": "electron-forge start"
   },
   "keywords": [],
-  "author": "",
+  "author": "Aliaksandr Kavalenka aliaksandr.kavalenka0236@gmail.com",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.23.2",
@@ -27,6 +30,14 @@
     "@babel/preset-env": "^7.23.2",
     "@babel/preset-react": "^7.22.15",
     "@chromatic-com/storybook": "^1.3.3",
+    "@electron-forge/cli": "^7.4.0",
+    "@electron-forge/maker-deb": "^7.4.0",
+    "@electron-forge/maker-rpm": "^7.4.0",
+    "@electron-forge/maker-squirrel": "^7.4.0",
+    "@electron-forge/maker-zip": "^7.4.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
+    "@electron-forge/plugin-fuses": "^7.4.0",
+    "@electron/fuses": "^1.8.0",
     "@storybook/addon-essentials": "^8.0.8",
     "@storybook/addon-interactions": "^8.0.8",
     "@storybook/addon-links": "^8.0.8",
@@ -44,6 +55,7 @@
     "babel-loader": "^9.1.3",
     "concurrently": "^8.2.2",
     "css-loader": "^6.8.1",
+    "electron": "^27.3.11",
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^5.0.0-alpha.2",
@@ -67,7 +79,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.29.0",
     "commander": "^11.0.0",
-    "electron": "^27.0.2",
+    "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
