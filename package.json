@@ -2,9 +2,9 @@
   "name": "skarb",
   "version": "1.1.0",
   "description": "",
-  "main": "./src/index.js",
+  "main": "./cli/index.js",
   "bin": {
-    "skarb": "./src/index.js"
+    "skarb": "./cli/index.js"
   },
   "scripts": {
     "desktop:client:build:dev": "webpack --config ./desktop/webpack.config.js --mode development",
@@ -12,7 +12,7 @@
     "desktop:client:serve": "webpack serve --config ./desktop/webpack.config.js --mode development",
     "desktop:main:dev": "nodemon -w ./desktop/src --exec electron ./desktop/src/main.js",
     "desktop:dev": "concurrently \"npm run desktop:client:build:watch\" \"npm run desktop:main:dev\"",
-    "start": "node ./src/index.js",
+    "start": "node ./cli/index.js",
     "lint": "eslint . --ext .js",
     "e2e": "node ./e2e/index.js",
     "storybook": "storybook dev -p 6006",
