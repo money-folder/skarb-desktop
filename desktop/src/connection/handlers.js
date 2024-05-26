@@ -23,7 +23,7 @@ async function handleGetDbSources() {
   return await getDbSources();
 }
 
-async function deleteDbSource(event, dbSource) {
+async function handleDeleteDbSource(event, dbSource) {
   const dbSources = store.get('dbSources', []);
   const connectionsToSet = dbSources.filter((db) => db !== dbSource);
   const existingFiles = await filterExistingFiles(connectionsToSet);
@@ -32,15 +32,15 @@ async function deleteDbSource(event, dbSource) {
   return uniqueFiles;
 }
 
-async function connectToDb(event, dbSource) {
+async function handleConnectToDb(event, dbSource) {
   await setDatabaseConnection(dbSource);
 }
 
-async function getCurrentConnection() {
+async function handleGetCurrentConnection() {
   return getDatabaseConnectionData();
 }
 
-async function createConnection() {
+async function handleCreateConnection() {
   const folder = await getConnectionFolderDialog();
   const dbFile = await createConnectionDb(folder);
   await addDbSource(dbFile);
@@ -50,8 +50,8 @@ async function createConnection() {
 module.exports = {
   handleAddDbSource,
   handleGetDbSources,
-  deleteDbSource,
-  connectToDb,
-  getCurrentConnection,
-  createConnection,
+  handleDeleteDbSource,
+  handleConnectToDb,
+  handleGetCurrentConnection,
+  handleCreateConnection,
 };
