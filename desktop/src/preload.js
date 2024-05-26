@@ -6,6 +6,7 @@ const {
   DELETE_DB_SOURCE,
   CONNECT_TO_DB,
   GET_CURRENT_CONNECTION,
+  CREATE_CONNECTION,
 } = require('./connection/channels');
 const {
   LIST_WALLETS,
@@ -39,6 +40,7 @@ contextBridge.exposeInMainWorld('electron', {
         ipcRenderer.invoke(DELETE_DB_SOURCE, dbSource),
       connectToDb: (dbSource) => ipcRenderer.invoke(CONNECT_TO_DB, dbSource),
       getCurrentConnection: () => ipcRenderer.invoke(GET_CURRENT_CONNECTION),
+      create: (filename) => ipcRenderer.invoke(CREATE_CONNECTION, filename),
     },
 
     currencies: {

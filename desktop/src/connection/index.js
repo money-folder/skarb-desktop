@@ -6,6 +6,7 @@ const {
   DELETE_DB_SOURCE,
   CONNECT_TO_DB,
   GET_CURRENT_CONNECTION,
+  CREATE_CONNECTION,
 } = require('./channels');
 const {
   handleAddDbSource,
@@ -13,6 +14,7 @@ const {
   deleteDbSource,
   connectToDb,
   getCurrentConnection,
+  createConnection,
 } = require('./handlers');
 
 const setupConnectionHandlers = () => {
@@ -21,6 +23,7 @@ const setupConnectionHandlers = () => {
   ipcMain.handle(DELETE_DB_SOURCE, deleteDbSource);
   ipcMain.handle(CONNECT_TO_DB, connectToDb);
   ipcMain.handle(GET_CURRENT_CONNECTION, getCurrentConnection);
+  ipcMain.handle(CREATE_CONNECTION, createConnection);
 };
 
 module.exports = {
