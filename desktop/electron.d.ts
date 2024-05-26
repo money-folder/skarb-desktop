@@ -37,6 +37,7 @@ interface Window {
         deleteDbSource: (filePath: string) => Promise<string[]>;
         connectToDb: (filePath: string) => Promise<void>;
         getCurrentConnection: () => Promise<string | null>;
+        create: () => Promise<string | null>;
       };
 
       currencies: {

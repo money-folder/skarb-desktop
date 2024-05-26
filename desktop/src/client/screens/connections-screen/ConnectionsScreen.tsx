@@ -13,6 +13,7 @@ import LinkSource from './LinkSource';
 
 // icons
 import CrossIcon from '../../assets/cross.svg';
+import CreateDb from './CreateDb';
 
 const ConnectionsScreen = () => {
   const { data: fileNames = [] } = useDbSources();
@@ -35,8 +36,9 @@ const ConnectionsScreen = () => {
       <h2 className="text-center font-extrabold text-xl">Connections</h2>
 
       <div className="mt-10 w-full flex flex-col items-center">
-        <div className="w-2/3">
+        <div className="w-2/3 flex gap-3">
           <LinkSource />
+          <CreateDb />
         </div>
 
         <table className="mt-5 w-2/3">

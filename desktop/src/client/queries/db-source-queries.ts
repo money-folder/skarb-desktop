@@ -69,3 +69,19 @@ export const useCurrentConnection = (): UseQueryResult<string | null> => {
       window.electron.ipcRenderer.connection.getCurrentConnection(),
   });
 };
+
+export const useCreateConnection = (): UseMutationResult<
+  string | null,
+  unknown,
+  void,
+  unknown
+> => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: () => window.electron.ipcRenderer.connection.create(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['dbSources'] });
+      queryClient.invalidateQueries({ queryKey: ['currentConnection'] });
+    },
+  });
+};
