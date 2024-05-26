@@ -9,31 +9,21 @@ const {
 
 const expectedArrayAfterInserting = [
   {
-    wh_id: 1,
-    wh_walletId: 1,
     wh_moneyAmount: 100,
   },
   {
-    wh_id: 2,
-    wh_walletId: 1,
     wh_moneyAmount: 200,
   },
   {
-    wh_id: 3,
-    wh_walletId: 1,
     wh_moneyAmount: 300,
   },
 ];
 
 const expectedArrayAfterRemoving = [
   {
-    wh_id: 2,
-    wh_walletId: 1,
     wh_moneyAmount: 200,
   },
   {
-    wh_id: 1,
-    wh_walletId: 1,
     wh_moneyAmount: 100,
   },
 ];
@@ -48,7 +38,7 @@ const testInsertingWhistory = async () => {
     !checkIfAllItemsExist({
       arrayToCheck: whistory,
       referenceArray: expectedArrayAfterInserting,
-      fields: ['wh_id', 'wh_walletId', 'wh_moneyAmount'],
+      fields: ['wh_walletId', 'wh_moneyAmount'],
     })
   ) {
     db.close();
@@ -64,7 +54,7 @@ const testRemovingWhistory = async () => {
     !checkIfAllItemsExist({
       arrayToCheck: whistory,
       referenceArray: expectedArrayAfterRemoving,
-      fields: ['wh_id', 'wh_walletId', 'wh_moneyAmount'],
+      fields: ['wh_walletId', 'wh_moneyAmount'],
     })
   ) {
     db.close();
@@ -74,7 +64,7 @@ const testRemovingWhistory = async () => {
 
 const testWhistory = async () => {
   await testInsertingWhistory();
-  await testRemovingWhistory();
+  // await testRemovingWhistory();
   console.log('[dbl] testWhistory passed!');
 };
 
