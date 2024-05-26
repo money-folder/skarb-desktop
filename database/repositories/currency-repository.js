@@ -1,9 +1,16 @@
+const crypto = require('node:crypto');
+
 const { getDatabaseConnection, runSQL, allSQL } = require('../db');
 
 const insertCurrency = async ({ currency }) => {
   const db = await getDatabaseConnection();
 
-  await runSQL(db, `INSERT INTO currencies (c_name) VALUES ("${currency}")`);
+  const newEntryId = crypto.randomUUID();
+
+  await runSQL(
+    db,
+    `INSERT INTO currencies (c_id, c_name) VALUES ('${newEntryId}', '${currency}')`,
+  );
 
   const latestInserted = await allSQL(
     db,
@@ -18,12 +25,12 @@ const deleteCurrencySoft = async (id) => {
 
   await runSQL(
     db,
-    `UPDATE currencies SET c_deletedAt = DATETIME('now') WHERE c_id = ${id}`,
+    `UPDATE currencies SET c_deletedAt = DATETIME('now') WHERE c_id = '${id}'`,
   );
 
   const updatedCurrency = await allSQL(
     db,
-    `SELECT * FROM currencies WHERE c_id = ${id} LIMIT 1`,
+    `SELECT * FROM currencies WHERE c_id = '${id}' LIMIT 1`,
   );
 
   return updatedCurrency;
@@ -34,12 +41,12 @@ const restoreCurrency = async (id) => {
 
   await runSQL(
     db,
-    `UPDATE currencies SET c_deletedAt = null WHERE c_id = ${id}`,
+    `UPDATE currencies SET c_deletedAt = null WHERE c_id = '${id}'`,
   );
 
   const updatedCurrency = await allSQL(
     db,
-    `SELECT * FROM currencies WHERE c_id = ${id} LIMIT 1`,
+    `SELECT * FROM currencies WHERE c_id = '${id}' LIMIT 1`,
   );
 
   return updatedCurrency;
@@ -50,10 +57,10 @@ const deleteCurrencyHard = async (id) => {
 
   const currencyToDelete = await allSQL(
     db,
-    `SELECT * FROM currencies WHERE c_id = ${id} LIMIT 1`,
+    `SELECT * FROM currencies WHERE c_id = '${id}' LIMIT 1`,
   );
 
-  await runSQL(db, `DELETE FROM currencies WHERE c_id = ${id}`);
+  await runSQL(db, `DELETE FROM currencies WHERE c_id = '${id}'`);
 
   return currencyToDelete;
 };
@@ -69,7 +76,7 @@ const selectCurrencyById = async (id) => {
 
   const currency = await allSQL(
     db,
-    `SELECT * FROM currencies WHERE c_id = ${id} LIMIT 1`,
+    `SELECT * FROM currencies WHERE c_id = '${id}' LIMIT 1`,
   );
 
   return currency;
@@ -80,7 +87,7 @@ const selectCurrenciesByNameCaseInsensitive = async (name) => {
 
   const currency = await allSQL(
     db,
-    `SELECT * FROM currencies WHERE LOWER(c_name) = LOWER("${name}")`,
+    `SELECT * FROM currencies WHERE LOWER(c_name) = LOWER('${name}')`,
   );
 
   return currency;
