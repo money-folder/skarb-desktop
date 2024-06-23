@@ -40,17 +40,9 @@ interface Window {
         create: () => Promise<string | null>;
       };
 
-      currencies: {
-        list: () => Promise<Currency[]>;
-        create: (name: string) => Promise<void>;
-        softDelete: (currency: string) => Promise<void>;
-        restore: (currency: string) => Promise<void>;
-        hardDelete: (currency: string) => Promise<void>;
-      };
-
       wallets: {
         list: () => Promise<DesktopWalletResponse[]>;
-        create: (name: string, currencyId: string) => Promise<void>;
+        create: (name: string, currency: string) => Promise<void>;
         softDelete: (walletId: string) => Promise<void>;
         hardDelete: (walletId: string) => Promise<void>;
         restore: (walletId: string) => Promise<void>;

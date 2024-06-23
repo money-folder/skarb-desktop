@@ -1,9 +1,6 @@
 import React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
-// types
-import { Currency } from '../../types/currencies';
-
 // queries
 import { useCreateWallet } from '../../queries/wallets-queries';
 
@@ -12,17 +9,16 @@ import PrimaryButton from '../../components/buttons/PrimaryButton';
 import SecondaryButton from '../../components/buttons/SecondaryButton';
 
 interface Props {
-  currencies: Currency[];
   close: () => void;
 }
 
-const CreateWalletForm = ({ currencies, close }: Props) => {
+const CreateWalletForm = ({ close }: Props) => {
   const { register, handleSubmit } = useForm();
 
   const { mutateAsync } = useCreateWallet();
 
   const onSubmit = async (e: FieldValues) => {
-    await mutateAsync({ name: e.name, currencyId: e.currency });
+    await mutateAsync({ name: e.name, currency: e.currency });
 
     close();
   };
@@ -40,16 +36,10 @@ const CreateWalletForm = ({ currencies, close }: Props) => {
 
         <label className="mt-2 w-full flex flex-col items-start">
           <span>Currency: </span>
-          <select
+          <input
             {...register('currency', { required: true })}
             className="px-2 border-[1px] border-black rounded-sm"
-          >
-            {currencies.map((currency) => (
-              <option key={currency.id} value={currency.id}>
-                {currency.name}
-              </option>
-            ))}
-          </select>
+          />
         </label>
 
         <div className="mt-5 flex justify-end gap-2">

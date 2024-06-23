@@ -5,7 +5,6 @@ const { app, BrowserWindow } = require('electron');
 const { setupConnectionHandlers } = require('./connection');
 const { setupWalletsHandlers } = require('./wallets');
 const { setupWhistoryHandlers } = require('./whistory');
-const { setupCurrenciesHandlers } = require('./currencies');
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -37,7 +36,6 @@ app.whenReady().then(() => {
   setupConnectionHandlers();
   setupWalletsHandlers();
   setupWhistoryHandlers();
-  setupCurrenciesHandlers();
 });
 
 app.on('window-all-closed', () => {

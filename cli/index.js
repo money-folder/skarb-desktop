@@ -12,11 +12,7 @@ const {
   handleInit,
   handleMigrate,
 } = require('./controllers/database-controller');
-const {
-  handleAddCurrency,
-  handleListCurrencies,
-  handleRmCurrency,
-} = require('./controllers/currency-controller');
+const { handleListCurrencies } = require('./controllers/currency-controller');
 const {
   handleAddWallet,
   handleListWallets,
@@ -44,19 +40,6 @@ const currencies = program
   .description('Manage currencies');
 
 currencies
-  .command('add')
-  .description('Add a currency')
-  .requiredOption('-n, --name <name>', 'Currency name')
-  .action(decorateWithArgsLogger(handleAddCurrency));
-
-currencies
-  .command('rm')
-  .description('Remove a currency')
-  .requiredOption('-c, --currency-id <currencyId>', 'Currency id')
-  .option('-h, --hard', 'Hard deletion')
-  .action(decorateWithArgsLogger(handleRmCurrency));
-
-currencies
   .command('list')
   .description('Shows a list of currencies')
   .action(decorateWithArgsLogger(handleListCurrencies));
@@ -69,7 +52,7 @@ wallets
   .command('add')
   .description('Add a wallet')
   .requiredOption('-n, --name <name>', 'Wallet name')
-  .requiredOption('-c, --currency-id <currencyId>', 'Currency id')
+  .requiredOption('-c, --currency <currency>', 'Currency')
   .action(decorateWithArgsLogger(handleAddWallet));
 
 wallets

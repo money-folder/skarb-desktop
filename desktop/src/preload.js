@@ -22,15 +22,8 @@ const {
   RESTORE_WHISTORY,
   HARD_DELETE_WHISTORY,
 } = require('./whistory/channels');
-const {
-  LIST_CURRENCIES,
-  CREATE_CURRENCY,
-  SOFT_DELETE_CURRENCY,
-  RESTORE_CURRENCY,
-  HARD_DELETE_CURRENCY,
-} = require('./currencies/channels');
 
-// TODO: investigate if I can simply call handlers instead of dispatching actions
+// TODO: investigate if I can just call handlers instead of dispatching actions
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {
     connection: {
@@ -43,20 +36,10 @@ contextBridge.exposeInMainWorld('electron', {
       create: (filename) => ipcRenderer.invoke(CREATE_CONNECTION, filename),
     },
 
-    currencies: {
-      list: () => ipcRenderer.invoke(LIST_CURRENCIES),
-      create: (name) => ipcRenderer.invoke(CREATE_CURRENCY, name),
-      softDelete: (currencyId) =>
-        ipcRenderer.invoke(SOFT_DELETE_CURRENCY, currencyId),
-      restore: (currencyId) => ipcRenderer.invoke(RESTORE_CURRENCY, currencyId),
-      hardDelete: (currencyId) =>
-        ipcRenderer.invoke(HARD_DELETE_CURRENCY, currencyId),
-    },
-
     wallets: {
       list: () => ipcRenderer.invoke(LIST_WALLETS),
-      create: (name, currencyId) =>
-        ipcRenderer.invoke(CREATE_WALLET, name, currencyId),
+      create: (name, currency) =>
+        ipcRenderer.invoke(CREATE_WALLET, name, currency),
       softDelete: (walletId) =>
         ipcRenderer.invoke(SOFT_DELETE_WALLET, walletId),
       hardDelete: (walletId) =>

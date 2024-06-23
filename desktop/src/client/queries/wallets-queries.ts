@@ -29,7 +29,7 @@ export const useWallet = (
 
 interface CreateWalletParams {
   name: string;
-  currencyId: string;
+  currency: string;
 }
 
 export const useCreateWallet = (): UseMutationResult<
@@ -40,8 +40,8 @@ export const useCreateWallet = (): UseMutationResult<
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ name, currencyId }) => {
-      return window.electron.ipcRenderer.wallets.create(name, currencyId);
+    mutationFn: ({ name, currency }) => {
+      return window.electron.ipcRenderer.wallets.create(name, currency);
     },
 
     onSuccess: () => {
