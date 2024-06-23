@@ -9,18 +9,10 @@ const createMigrationsTableSQL = `
 `;
 
 const createWalletsTablesSQL = `
-  CREATE TABLE currencies (
-      c_id TEXT PRIMARY KEY,
-      c_name TEXT NOT NULL,
-      c_createdAt DATETIME DEFAULT (DATETIME('now', 'utc')),
-      c_updatedAt DATETIME DEFAULT (DATETIME('now', 'utc')),
-      c_deletedAt DATETIME DEFAULT NULL
-  );
-
   CREATE TABLE wallets (
       w_id TEXT PRIMARY KEY,
       w_name TEXT NOT NULL,
-      w_currencyId INTEGER NOT NULL,
+      w_currency TEXT NOT NULL,
       w_createdAt DATETIME DEFAULT (DATETIME('now', 'utc')),
       w_updatedAt DATETIME DEFAULT (DATETIME('now', 'utc')),
       w_deletedAt DATETIME DEFAULT NULL
