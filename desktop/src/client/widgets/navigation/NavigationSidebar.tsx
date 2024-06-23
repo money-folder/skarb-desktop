@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom';
 import { useWallets } from '../../queries/wallets-queries';
 import { useCurrentConnection } from '../../queries/db-source-queries';
 
-import CreateCurrencyButton from '../create-currency/CreateCurrencyButton';
 import CreateWalletButton from '../create-wallet/CreateWalletButton';
 import AddWhistoryButton from '../add-whistory/AddWhistoryButton';
 
@@ -32,22 +31,6 @@ const NavigationSidebar = () => {
           >
             Connections
           </NavLink>
-        </li>
-
-        <li
-          className={`w-full inline-flex justify-between items-center ${!currentConnection ? 'pointer-events-none opacity-50' : ''} `}
-        >
-          <NavLink
-            to="/currencies"
-            className={({ isActive }) =>
-              `${isActive ? 'text-white bg-black' : ''} hover:underline`
-            }
-            end
-          >
-            Currencies
-          </NavLink>
-
-          <CreateCurrencyButton />
         </li>
 
         <li

@@ -3,7 +3,6 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 
 // screens
 import HomeScreen from './screens/home-screen/HomeScreen';
-import CurrenciesScreen from './screens/currencies-screen/CurrenciesScreen';
 import ConnectionsScreen from './screens/connections-screen/ConnectionsScreen';
 import WalletsScreen from './screens/wallets-screen/WalletsScreen';
 import WalletScreen from './screens/wallet-screen/WalletScreen';
@@ -24,7 +23,6 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HomeScreen />} />
             <Route path="/connections" element={<ConnectionsScreen />} />
-            <Route path="/currencies" element={<CurrenciesScreen />} />
             <Route path="/wallets" element={<WalletsScreen />} />
             <Route path="/wallets/:id" element={<WalletScreen />} />
           </Routes>
