@@ -1,5 +1,5 @@
 const path = require('node:path');
-const fs = require('node:fs/promises');
+const fs = require('node:fs');
 
 const {
   setDatabaseConnection,
@@ -20,11 +20,9 @@ const wrapDatabaseLevelTest = (test) => async () => {
   await test();
 
   const db = await getDatabaseConnection();
-  db.close();
+  await db.close();
 
   await setDatabaseConnection(null);
-
-  await fs.unlink(path.join(__dirname, './skarb.sqlite3'));
 };
 
 module.exports = { wrapDatabaseLevelTest, checkIfAllItemsExist };

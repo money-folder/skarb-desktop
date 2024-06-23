@@ -37,7 +37,6 @@ const testInsertingWallets = async () => {
 
 const testRemovingWallets = async () => {
   const walletsBefore = await selectWallets();
-  console.table(walletsBefore);
   if (walletsBefore.find((wb) => wb.w_name === 'test')) {
     console.error(
       'testInsertingWallets::',
@@ -48,7 +47,6 @@ const testRemovingWallets = async () => {
 
   await insertWallet({ wallet: 'test', currency: 'PLN' });
   const walletsAfterCreation = await selectWallets();
-  console.table(walletsAfterCreation);
   const newWallet = walletsAfterCreation.find((wb) => wb.w_name === 'test');
   if (!newWallet) {
     console.error(
@@ -61,7 +59,6 @@ const testRemovingWallets = async () => {
   await deleteWalletHard(newWallet.w_id);
 
   const walletsAfterDeletion = await selectWallets();
-  console.table(walletsAfterDeletion);
   if (walletsAfterDeletion.find((wb) => wb.w_name === 'test')) {
     console.error(
       'testInsertingWallets::',
