@@ -12,11 +12,7 @@ const {
   handleInit,
   handleMigrate,
 } = require('./controllers/database-controller');
-const {
-  handleAddCurrency,
-  handleListCurrencies,
-  handleRmCurrency,
-} = require('./controllers/currency-controller');
+const { handleListCurrencies } = require('./controllers/currency-controller');
 const {
   handleAddWallet,
   handleListWallets,

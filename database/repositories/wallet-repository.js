@@ -119,6 +119,17 @@ const selectWalletsByNameCaseInsensitive = async (name) => {
   return wallets;
 };
 
+const selectCurrencies = async () => {
+  const db = await getDatabaseConnection();
+
+  const currencies = await allSQL(
+    db,
+    `SELECT w_currency FROM wallets GROUP BY w_currency`,
+  );
+
+  return currencies;
+};
+
 module.exports = {
   insertWallet,
   deleteWalletSoft,
@@ -128,4 +139,5 @@ module.exports = {
   selectWalletById,
   selectWalletsByNameCaseInsensitive,
   restoreWallet,
+  selectCurrencies,
 };
