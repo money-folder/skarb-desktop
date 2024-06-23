@@ -14,8 +14,8 @@ const listWallets = async () => {
   return wallets.map(formatWalletWithLatestWhFromDb);
 };
 
-const createWallet = async (event, name, currencyId) => {
-  await insertWallet({ wallet: name, currencyId });
+const createWallet = async (event, name, currency) => {
+  await insertWallet({ wallet: name, currency });
 };
 
 const softDeleteWallet = async (event, walletId) => {

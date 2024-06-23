@@ -18,7 +18,7 @@ const CreateWalletForm = ({ close }: Props) => {
   const { mutateAsync } = useCreateWallet();
 
   const onSubmit = async (e: FieldValues) => {
-    await mutateAsync({ name: e.name, currencyId: e.currency });
+    await mutateAsync({ name: e.name, currency: e.currency });
 
     close();
   };

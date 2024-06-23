@@ -38,8 +38,8 @@ contextBridge.exposeInMainWorld('electron', {
 
     wallets: {
       list: () => ipcRenderer.invoke(LIST_WALLETS),
-      create: (name, currencyId) =>
-        ipcRenderer.invoke(CREATE_WALLET, name, currencyId),
+      create: (name, currency) =>
+        ipcRenderer.invoke(CREATE_WALLET, name, currency),
       softDelete: (walletId) =>
         ipcRenderer.invoke(SOFT_DELETE_WALLET, walletId),
       hardDelete: (walletId) =>

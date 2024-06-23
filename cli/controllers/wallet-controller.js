@@ -6,8 +6,8 @@ const {
 
 const handleAddWallet = async (params) => {
   try {
-    const { name: wallet, currencyId } = params;
-    await addWallet(currencyId, wallet);
+    const { name: wallet, currency } = params;
+    await addWallet(currency, wallet);
   } catch (error) {
     console.error(error);
   }

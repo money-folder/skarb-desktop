@@ -123,7 +123,11 @@ const WalletScreen = () => {
         </div>
 
         <div className="px-5 flex justify-center items-start">
-          <WalletHistoryChart width={600} height={300} list={whistoryList} />
+          {whistoryList.length > 1 ? (
+            <WalletHistoryChart width={600} height={300} list={whistoryList} />
+          ) : (
+            <p>Not enough data for building the chart 😢</p>
+          )}
         </div>
       </div>
     </div>

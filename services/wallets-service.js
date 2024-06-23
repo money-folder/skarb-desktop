@@ -14,11 +14,11 @@ const {
 // formatters
 const { formatWalletFromDb } = require('../formatters/wallets-formatter');
 
-const addWallet = async (wallet) => {
+const addWallet = async (currency, wallet) => {
   const walletsWithSameName = await selectWalletsByNameCaseInsensitive(wallet);
 
   if (!walletsWithSameName.length) {
-    const result = await insertWallet({ wallet });
+    const result = await insertWallet({ wallet, currency });
     console.table(result.map(formatWalletFromDb));
   } else {
     console.error('Wallet name is not unique. Please choose another one.');

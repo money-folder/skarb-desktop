@@ -1,11 +1,11 @@
 const createMigrationsTableSQL = `
   CREATE TABLE migrations (
     m_id TEXT PRIMARY KEY,
-    m_title INTEGER UNIQUE NOT NULL,
+    m_title TEXT UNIQUE NOT NULL,
     m_createdAt DATETIME DEFAULT (DATETIME('now', 'utc'))
   );
 
-  insert into migrations (m_title) values (1);
+  insert into migrations (m_title) values ('1_create_migrations_table');
 `;
 
 const createWalletsTablesSQL = `
@@ -20,7 +20,7 @@ const createWalletsTablesSQL = `
 
   CREATE TABLE wallets_history (
       wh_id TEXT PRIMARY KEY,
-      wh_walletId INTEGER NOT NULL,
+      wh_walletId TEXT NOT NULL,
       wh_moneyAmount REAL NOT NULL,
       wh_date DATETIME DEFAULT (DATETIME('now', 'utc')),
       wh_createdAt DATETIME DEFAULT (DATETIME('now', 'utc')),
@@ -28,17 +28,17 @@ const createWalletsTablesSQL = `
       wh_deletedAt DATETIME DEFAULT NULL
   );
 
-  insert into migrations (m_title) values (2);
+  insert into migrations (m_title) values ('2_create_wallet_tables');
 `;
 
 const migrationsMap = {
   1: {
-    title: 'create_migrations_table',
+    title: '1_create_migrations_table',
     sql: createMigrationsTableSQL,
   },
 
   2: {
-    title: 'create_wallets_tables',
+    title: '2_create_wallet_tables',
     sql: createWalletsTablesSQL,
   },
 };

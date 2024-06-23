@@ -2,14 +2,14 @@ const crypto = require('node:crypto');
 
 const { getDatabaseConnection, runSQL, allSQL } = require('../db');
 
-const insertWallet = async ({ wallet, currencyId }) => {
+const insertWallet = async ({ wallet, currency }) => {
   const db = await getDatabaseConnection();
 
   const newEntryId = crypto.randomUUID();
 
   await runSQL(
     db,
-    `INSERT INTO wallets (w_id, w_name, w_currencyId) VALUES ('${newEntryId}', '${wallet}', '${currencyId}')`,
+    `INSERT INTO wallets (w_id, w_name, w_currency) VALUES ('${newEntryId}', '${wallet}', '${currency}')`,
   );
 
   const latestInserted = await allSQL(
@@ -70,7 +70,7 @@ const selectWallets = async () => {
 
   const wallets = await allSQL(
     db,
-    `SELECT * FROM wallets LEFT JOIN currencies ON currencies.c_id = wallets.w_currencyId ORDER BY w_id`,
+    `SELECT * FROM wallets ORDER BY w_createdAt`,
   );
 
   return wallets;
@@ -84,7 +84,6 @@ const selectWalletsWithLatestWh = async () => {
     `
     SELECT *
     FROM wallets
-    LEFT JOIN currencies ON currencies.c_id = wallets.w_currencyId
     LEFT JOIN (
       SELECT *, max(wh_createdAt)
       FROM wallets_history
@@ -109,17 +108,6 @@ const selectWalletById = async (id) => {
   return wallet;
 };
 
-const selectWalletsByCurrencyId = async (currencyId) => {
-  const db = await getDatabaseConnection();
-
-  const wallets = await allSQL(
-    db,
-    `SELECT * FROM wallets WHERE w_currencyId = '${currencyId}'`,
-  );
-
-  return wallets;
-};
-
 const selectWalletsByNameCaseInsensitive = async (name) => {
   const db = await getDatabaseConnection();
 
@@ -138,7 +126,6 @@ module.exports = {
   selectWallets,
   selectWalletsWithLatestWh,
   selectWalletById,
-  selectWalletsByCurrencyId,
   selectWalletsByNameCaseInsensitive,
   restoreWallet,
 };
