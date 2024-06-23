@@ -86,10 +86,17 @@ const getDatabaseConnectionData = async () => {
   return getAbsoluteFilePath(result.filename);
 };
 
+const closeDatabaseConnection = async () => {
+  const db = await databaseConnection;
+  databaseConnection = null;
+  return new Promise((res) => db.close(res));
+};
+
 module.exports = {
   setDatabaseConnection,
   getDatabaseConnection,
   getDatabaseConnectionData,
+  closeDatabaseConnection,
   runSQL,
   execSQL,
   allSQL,
