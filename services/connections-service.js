@@ -52,7 +52,6 @@ const createConnectionDb = async (folderPath) => {
   const alreadyExists = await fs
     .access(dbPath, fs.constants.F_OK)
     .catch(() => false);
-  console.log('1');
   if (alreadyExists) {
     return null;
   }
